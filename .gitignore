@@ -1,0 +1,5 @@
+node_modules
+output.yaml
+.vscode
+.idea
+.DS_Store
