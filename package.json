@@ -2,7 +2,7 @@
   "name": "collector-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "collector-publish.js",
   "scripts": {
     "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket desole-collector-backend",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name desole-collector-backend --capabilities CAPABILITY_IAM"

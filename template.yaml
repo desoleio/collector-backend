@@ -1,26 +1,47 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Resources:
-  ApiEndpointFunction:
+  CollectorPublisherFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      Handler: collector-publish.handler
       Runtime: nodejs6.10
       Environment:
         Variables:
-          TOPIC_ARN: !Ref ApiEndpointTopic
+          TOPIC_ARN: !Ref CollectorTopic
       Policies:
         - Version: 2012-10-17
           Statement:
             - Effect: Allow
               Action:
                 - sns:Publish
-              Resource: !Ref ApiEndpointTopic
+              Resource: !Ref CollectorTopic
       Events:
         ApiEndpointApi:
           Type: Api
           Properties:
             Path: /hello-world
             Method: ANY
-  ApiEndpointTopic: 
+  CollectorTopic: 
     Type: AWS::SNS::Topic
+  CollectorSubscriberFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: collector-subscriber-s3.handler
+      Runtime: nodejs6.10
+      Environment:
+        Variables:
+          BUCKET_ARN: !Ref CollectedEventsStorage
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action: 's3:*'
+              Resource: !Sub 'arn:aws:s3:::${CollectedEventsStorage}/*'
+      Events:
+        CollectorSubscribedTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref CollectorTopic
+  CollectedEventsStorage:
+    Type: AWS::S3::Bucket
