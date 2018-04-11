@@ -89,6 +89,9 @@ Resources:
             - Effect: Allow
               Action: 'mobileanalytics:PutEvents'
               Resource: '*'
+            - Effect: Allow
+              Action: 'mobiletargeting:UpdateEndpoint'
+              Resource: '*'
       Events:
         CollectorSubscribedTopic:
           Type: SNS

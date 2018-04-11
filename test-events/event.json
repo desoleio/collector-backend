@@ -1,9 +1,9 @@
 {
- "severity": "fatal",
- "stack": "zeka.js:42",
- "category": "RealtimeError",
+ "severity": "error",
+ "stack": "peka.js:42",
+ "category": "SyntaxError",
  "timestamp": 1523446899339,
- "resource": "https://facebook.com/x.y",
+ "resource": "https://google.com/b/7.y",
  "app": {
     "name": "console",
     "version": "6.6.6",
@@ -13,8 +13,8 @@
     "submitted-from": "lemon chili"
  },
  "endpoint": {
-    "id": "123-1455-1245-123466",
-    "language": "en",
+    "id": "new-2455-1245-123466",
+    "language": "en_GB",
     "platform": "MacIntel"
  }
 }
