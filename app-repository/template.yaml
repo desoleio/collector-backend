@@ -5,6 +5,13 @@ Parameters:
     Type: String
     Default: Desole
     Description: Namespace for CloudWatch Metrics 
+  PinpointApplicationId: 
+    Type: String
+    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics
+  PinpointEventName:
+    Type: String
+    Default: Error
+    Description: The name for custom events logged to Pinpoint analytics 
 Resources:
   CollectorApi:
     Type: AWS::Serverless::Function
@@ -67,6 +74,25 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref CollectorTopic
-
+  PinpointPublisher:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: pinpoint-publisher.handler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          MOBILE_HUB_APPLICATION: !Ref PinpointApplicationId
+          EVENT_NAME: !Ref PinpointEventName
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action: 'mobileanalytics:PutEvents'
+              Resource: '*'
+      Events:
+        CollectorSubscribedTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref CollectorTopic
   CollectedEventsStorage:
     Type: AWS::S3::Bucket

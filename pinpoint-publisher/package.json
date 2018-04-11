@@ -1,0 +1,23 @@
+{
+  "name": "@desole/pinpoint-publisher",
+  "version": "1.0.0",
+  "description": "Desole publisher saves AWS Pinpoint/Mobile analytics metrics",
+  "main": "src/lambda.js",
+  "keywords": [],
+  "files": [
+    "src"
+  ],
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@desole/devtools": "file:../devtools"
+  },
+  "dependencies": {
+    "@desole/common": "file:../common",
+    "flat": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.224.1"
+  }
+}

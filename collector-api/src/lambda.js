@@ -14,18 +14,17 @@ const AWS = require('aws-sdk'),
 		try {
 			const body = JSON.parse(lambdaProxyEvent.body),
 				normalizedHeaders = lowercaseKeys(lambdaProxyEvent.headers),
-				desoleEvent = extractKeys(body, ['severity', 'stack', 'category', 'timestamp', 'endpointId', 'tags']);
-
+				desoleEvent = extractKeys(body, ['severity', 'stack', 'category', 'timestamp', 'resource', 'tags']);
 			desoleEvent.app = extractKeys(body.app, ['name', 'version', 'stage']);
-			desoleEvent.endpointMetadata = extractKeys(body.endpointMetadata, ['pageUrl', 'language']);
+			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
 			desoleEvent.id = lambdaContext.awsRequestId;
 			desoleEvent.receivedAt = Date.now();
-			desoleEvent.endpointMetadata.referrer = normalizedHeaders.referrer;
-			desoleEvent.endpointMetadata.country = normalizedHeaders['cloudFront-viewer-country'];
-			desoleEvent.endpointMetadata.ip = lambdaProxyEvent.requestContext.identity.sourceIp;
-			desoleEvent.endpointMetadata.forwardedIps = normalizedHeaders['x-forwarded-for'];
-			desoleEvent.endpointMetadata.userAgent = lambdaProxyEvent.requestContext.identity.userAgent;
-			desoleEvent.endpointMetadata.deviceType = extractDeviceType(normalizedHeaders);
+			desoleEvent.endpoint.referrer = normalizedHeaders.referrer;
+			desoleEvent.endpoint.country = normalizedHeaders['cloudFront-viewer-country'];
+			desoleEvent.endpoint.ip = lambdaProxyEvent.requestContext.identity.sourceIp;
+			desoleEvent.endpoint.forwardedIps = normalizedHeaders['x-forwarded-for'];
+			desoleEvent.endpoint.userAgent = lambdaProxyEvent.requestContext.identity.userAgent;
+			desoleEvent.endpoint.deviceType = extractDeviceType(normalizedHeaders);
 			return validateEvent(desoleEvent);
 		} catch (e) {
 			console.log(e);
