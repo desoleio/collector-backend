@@ -1,0 +1,20 @@
+{
+ "severity": "fatal",
+ "stack": "index.js:42",
+ "category": "SyntaxError",
+ "timestamp": 1523446899339,
+ "endpointId": "123-1455-1245-123466",
+ "app": {
+    "name": "console",
+    "version": "6.6.6",
+    "stage": "prod"
+ },
+ "tags": {
+    "submitted-from": "lemon chili"
+ },
+ "endpointMetadata": {
+    "pageUrl": "https://facebook.com/x.y",
+    "language": "en",
+    "platform": "MacIntel"
+ }
+}
