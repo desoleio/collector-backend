@@ -9,5 +9,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-crockford": "^2.0.0",
+    "eslint-config-defaults": "^9.0.0"
+  }
 }

@@ -8,6 +8,9 @@
 
 ## Fields
 
+* id
+  * purpose: unique event ID so you can trace the same event in multiple storage systems (eg from dashboard to logs)
+  * collected at: API (lambdaContext.awsRequestId)
 * severity
   * purpose: error significance (eg fatal)
   * valid values: fatal, error, warning, info, debug

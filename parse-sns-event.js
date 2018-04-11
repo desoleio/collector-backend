@@ -1,6 +1,5 @@
-/*global module */
+'use strict';
 module.exports = function parseSNSEvent(event) {
-	'use strict';
 	const extractSns = record => record.Sns && record.Sns.Message && JSON.parse(record.Sns.Message);
 	if (!event || !event.Records || !Array.isArray(event.Records)) {
 		return [];

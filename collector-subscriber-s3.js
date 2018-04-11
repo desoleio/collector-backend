@@ -1,6 +1,6 @@
 'use strict';
 const AWS = require('aws-sdk'),
-	parseSNSEvent = require('./src/parse-sns-event'),
+	parseSNSEvent = require('./parse-sns-event'),
 	s3 = new AWS.S3(),
 	BUCKET_NAME = process.env.BUCKET_NAME,
 	BUCKET_PREFIX = process.env.BUCKET_PREFIX || 'archive',
@@ -20,7 +20,7 @@ const AWS = require('aws-sdk'),
 		}).promise();
 	};
 
-exports.handler = (event, context) => {
-    const records = parseSNSEvent(event);
+exports.handler = (event) => {
+	const records = parseSNSEvent(event);
 	return Promise.all(records.map(storeSingleEvent));
 };
