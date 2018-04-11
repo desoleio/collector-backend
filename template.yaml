@@ -5,7 +5,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: collector-publish.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Environment:
         Variables:
           TOPIC_ARN: !Ref CollectorTopic
@@ -28,15 +28,15 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: collector-subscriber-s3.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Environment:
         Variables:
-          BUCKET_ARN: !Ref CollectedEventsStorage
+          BUCKET_NAME: !Ref CollectedEventsStorage
       Policies:
         - Version: 2012-10-17
           Statement:
             - Effect: Allow
-              Action: 's3:*'
+              Action: 's3:PutObject'
               Resource: !Sub 'arn:aws:s3:::${CollectedEventsStorage}/*'
       Events:
         CollectorSubscribedTopic:

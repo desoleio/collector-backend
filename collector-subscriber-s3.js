@@ -1,25 +1,26 @@
 'use strict';
-const AWS = require('aws-sdk')
-const s3 = new AWS.S3()
-const BUCKET_ARN = process.env.BUCKET_ARN,
-    BUCKET_KEY = 'Desole';
+const AWS = require('aws-sdk'),
+	parseSNSEvent = require('./src/parse-sns-event'),
+	s3 = new AWS.S3(),
+	BUCKET_NAME = process.env.BUCKET_NAME,
+	BUCKET_PREFIX = process.env.BUCKET_PREFIX || 'archive',
+	calculateS3Key = function (event) {
+		const date = new Date(event.receivedAt),
+			year = date.getFullYear(),
+			month = date.getMonth() + 1,
+			day = date.getDate();
+		return [BUCKET_PREFIX, event.app.name, event.app.stage, year, month, day, event.severity, event.category, event.id].join('/');
+	},
+	storeSingleEvent = event => {
+		return s3.putObject({
+			Key: calculateS3Key(event),
+			Bucket: BUCKET_NAME,
+			ContentType: 'application/json',
+			Body: JSON.stringify(event, null, 2)
+		}).promise();
+	};
 
-exports.handler = (event, context, callback) => {
-
-    let receivedDesole = event.Records[0].Sns;
-
-    let params = {
-        Bucket: BUCKET_ARN,
-        Key: BUCKET_KEY,
-        ContentType: 'application/json',
-        Body: JSON.stringify(receivedDesole)
-    }
-
-    s3.putObject(params).promise()
-        .then(response => {
-            console.log(response);
-            callback(null, response);
-        }).catch(err => {
-            callback(err);
-        });
+exports.handler = (event, context) => {
+    const records = parseSNSEvent(event);
+	return Promise.all(records.map(storeSingleEvent));
 };
