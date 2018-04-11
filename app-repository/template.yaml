@@ -1,7 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
+Parameters: 
+  CloudWatchNameSpace: 
+    Type: String
+    Default: Desole
+    Description: Namespace for CloudWatch Metrics 
 Resources:
-  CollectorPublisherFunction:
+  CollectorApi:
     Type: AWS::Serverless::Function
     Properties:
       Handler: collector-api.handler
@@ -24,7 +29,7 @@ Resources:
             Method: ANY
   CollectorTopic: 
     Type: AWS::SNS::Topic
-  CollectorSubscriberFunction:
+  S3Publisher:
     Type: AWS::Serverless::Function
     Properties:
       Handler: s3-publisher.handler
@@ -43,5 +48,25 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref CollectorTopic
+  CloudwatchPublisher:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: cloudwatch-publisher.handler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          CLOUDWATCH_NAMESPACE: !Ref CloudWatchNameSpace
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action: 'cloudwatch:PutMetricData'
+              Resource: '*'
+      Events:
+        CollectorSubscribedTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref CollectorTopic
+
   CollectedEventsStorage:
     Type: AWS::S3::Bucket

@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@desole/s3-publisher": "file:../s3-publisher",
+    "@desole/cloudwatch-publisher": "file:../cloudwatch-publisher",
     "@desole/collector-api": "file:../collector-api"
   }
 }

@@ -1,13 +1,13 @@
 {
- "severity": "error",
- "stack": "index.js:42",
+ "severity": "fatal",
+ "stack": "zeka.js:42",
  "category": "InvalidError",
  "timestamp": 1523446899339,
  "endpointId": "123-1455-1245-123466",
  "app": {
     "name": "console",
     "version": "6.6.6",
-    "stage": "prod"
+    "stage": "dev"
  },
  "tags": {
     "submitted-from": "lemon chili"

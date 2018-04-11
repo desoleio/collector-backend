@@ -5,7 +5,7 @@
 ```
 npm i --no-optional
 aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket desole-upload-1
-aws cloudformation deploy --template-file output.yaml --stack-name desole-3 --capabilities CAPABILITY_IAM
+aws cloudformation deploy --template-file output.yaml --stack-name desole-3 --capabilities CAPABILITY_IAM --parameter-overrides CloudWatchNameSpace=DesoleEvents
 ```
 
 ## todo:
@@ -18,9 +18,4 @@ aws cloudformation deploy --template-file output.yaml --stack-name desole-3 --ca
   * encryption for storage
   * expiry
 
-#
-
-```
-curl -X POST https://pt8uhzwsci.execute-api.us-east-1.amazonaws.com/Prod/hello-world -H "Content-Type: application/json" -i --data @event.json
-```
 
