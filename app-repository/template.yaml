@@ -4,7 +4,7 @@ Resources:
   CollectorPublisherFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: collector-publish.handler
+      Handler: collector-api.handler
       Runtime: nodejs8.10
       Environment:
         Variables:
@@ -27,7 +27,7 @@ Resources:
   CollectorSubscriberFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: collector-subscriber-s3.handler
+      Handler: s3-publisher.handler
       Runtime: nodejs8.10
       Environment:
         Variables:

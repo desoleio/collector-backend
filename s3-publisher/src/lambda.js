@@ -1,6 +1,6 @@
 'use strict';
 const AWS = require('aws-sdk'),
-	parseSNSEvent = require('./parse-sns-event'),
+	parseSNSEvent = require('@desole/common/src/parse-sns-event'),
 	s3 = new AWS.S3(),
 	BUCKET_NAME = process.env.BUCKET_NAME,
 	BUCKET_PREFIX = process.env.BUCKET_PREFIX || 'archive',

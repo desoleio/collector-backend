@@ -1,0 +1,15 @@
+{
+  "name": "@desole/collector-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/lambda.js",
+  "files": ["src"],
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@desole/devtools": "file:../devtools"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.224.1"
+  }
+}

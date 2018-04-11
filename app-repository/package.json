@@ -1,8 +1,8 @@
 {
-  "name": "collector-backend",
+  "name": "@desole/app-repository",
   "version": "1.0.0",
   "description": "",
-  "main": "collector-publish.js",
+  "main": "lambda.js",
   "scripts": {
     "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket desole-collector-backend",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name desole-collector-backend --capabilities CAPABILITY_IAM"
@@ -10,9 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-crockford": "^2.0.0",
-    "eslint-config-defaults": "^9.0.0"
+  "dependencies": {
+    "@desole/s3-publisher": "file:../s3-publisher",
+    "@desole/collector-api": "file:../collector-api"
   }
 }

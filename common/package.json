@@ -1,0 +1,12 @@
+{
+  "name": "@desole/common",
+  "version": "1.0.0",
+  "description": "common functions for all backend collector tools",
+  "files": ["src"],
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@desole/devtools": "file:../devtools"
+  }
+}

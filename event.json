@@ -1,7 +1,7 @@
 {
- "severity": "fatal",
+ "severity": "error",
  "stack": "index.js:42",
- "category": "SyntaxError",
+ "category": "InvalidError",
  "timestamp": 1523446899339,
  "endpointId": "123-1455-1245-123466",
  "app": {

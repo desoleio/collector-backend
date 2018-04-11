@@ -1,0 +1,22 @@
+{
+  "name": "@desole/s3-publisher",
+  "version": "1.0.0",
+  "description": "Desole publisher that saves all events to a S3 Bucket",
+  "main": "src/lambda.js",
+  "keywords": [],
+  "files": [
+    "src"
+  ],
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@desole/devtools": "file:../devtools"
+  },
+  "dependencies": {
+    "@desole/common": "file:../common"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.224.1"
+  }
+}
