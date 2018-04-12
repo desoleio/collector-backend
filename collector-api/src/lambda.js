@@ -23,7 +23,7 @@ const AWS = require('aws-sdk'),
 			desoleEvent.referrer = normalizedHeaders.referrer;
 			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
 			Object.assign(desoleEvent.endpoint, {
-				country: normalizedHeaders['cloudFront-viewer-country'],
+				country: normalizedHeaders['cloudfront-viewer-country'],
 				userAgent: lambdaProxyEvent.requestContext.identity.userAgent,
 				deviceType: extractDeviceType(normalizedHeaders),
 				runtime: userAgent.family,
