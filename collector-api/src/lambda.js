@@ -3,6 +3,7 @@ const AWS = require('aws-sdk'),
 	sns = new AWS.SNS(),
 	TOPIC_ARN = process.env.TOPIC_ARN,
 	lowercaseKeys = require('./lowercase-keys'),
+	uaParser = require('useragent'),
 	extractKeys = require('./extract-keys'),
 	extractDeviceType = function (headers) {
 		return ['SmartTV', 'Mobile', 'Tablet', 'Desktop'].find(type => headers[`cloudfront-is-${type.toLowerCase()}`] === 'true');
@@ -14,17 +15,25 @@ const AWS = require('aws-sdk'),
 		try {
 			const body = JSON.parse(lambdaProxyEvent.body),
 				normalizedHeaders = lowercaseKeys(lambdaProxyEvent.headers),
+				userAgent = uaParser.parse(lambdaProxyEvent.requestContext.identity.userAgent),
 				desoleEvent = extractKeys(body, ['severity', 'stack', 'category', 'timestamp', 'resource', 'tags']);
 			desoleEvent.app = extractKeys(body.app, ['name', 'version', 'stage']);
-			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
 			desoleEvent.id = lambdaContext.awsRequestId;
 			desoleEvent.receivedAt = Date.now();
-			desoleEvent.endpoint.referrer = normalizedHeaders.referrer;
-			desoleEvent.endpoint.country = normalizedHeaders['cloudFront-viewer-country'];
-			desoleEvent.endpoint.ip = lambdaProxyEvent.requestContext.identity.sourceIp;
-			desoleEvent.endpoint.forwardedIps = normalizedHeaders['x-forwarded-for'];
-			desoleEvent.endpoint.userAgent = lambdaProxyEvent.requestContext.identity.userAgent;
-			desoleEvent.endpoint.deviceType = extractDeviceType(normalizedHeaders);
+			desoleEvent.referrer = normalizedHeaders.referrer;
+			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
+			Object.assign(desoleEvent.endpoint, {
+				country: normalizedHeaders['cloudFront-viewer-country'],
+				userAgent: lambdaProxyEvent.requestContext.identity.userAgent,
+				deviceType: extractDeviceType(normalizedHeaders),
+				runtime: userAgent.family,
+				runtimeVersion: userAgent.toVersion(),
+				os: userAgent.os.family,
+				osVersion: userAgent.os.toVersion()
+			});
+
+
+
 			return validateEvent(desoleEvent);
 		} catch (e) {
 			console.log(e);

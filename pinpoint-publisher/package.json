@@ -15,8 +15,7 @@
   },
   "dependencies": {
     "@desole/common": "file:../common",
-    "flat": "^4.0.0",
-    "useragent": "^2.3.0"
+    "flat": "^4.0.0"
   },
   "optionalDependencies": {
     "aws-sdk": "^2.224.1"

@@ -9,6 +9,9 @@
   "devDependencies": {
     "@desole/devtools": "file:../devtools"
   },
+  "dependencies": {
+    "useragent": "^2.3.0"
+  },
   "optionalDependencies": {
     "aws-sdk": "^2.224.1"
   }

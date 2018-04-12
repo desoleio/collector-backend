@@ -7,6 +7,7 @@ Parameters:
     Description: Namespace for CloudWatch Metrics 
   PinpointApplicationId: 
     Type: String
+    Default: '' 
     Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics
   PinpointEventName:
     Type: String

@@ -4,7 +4,7 @@ const AWS = require('aws-sdk'),
 	pinpoint = new AWS.Pinpoint(),
 	parseSNSEvent = require('@desole/common/src/parse-sns-event'),
 	flat = require('flat'),
-	uaParser = require('useragent'),
+
 	MOBILE_HUB_APPLICATION = process.env.MOBILE_HUB_APPLICATION,
 	EVENT_NAME = process.env.EVENT_NAME,
 
@@ -23,15 +23,9 @@ const AWS = require('aws-sdk'),
 				eventType: EVENT_NAME,
 				timestamp: new Date(event.receivedAt).toISOString(),
 				attributes: flat(event, {delimiter: ' '})
-			},
-			userAgent = event.endpoint.userAgent && uaParser.parse(event.endpoint.userAgent);
+			};
 		delete analyticsEvent.attributes.timestamp;
 		delete analyticsEvent.attributes.receivedAt;
-		if (userAgent) {
-			analyticsEvent.attributes['browser type'] = userAgent.family;
-			analyticsEvent.attributes['browser version'] = userAgent.toVersion();
-			analyticsEvent.attributes['browser OS'] = userAgent.os.toString();
-		}
 		return pinpoint.updateEndpoint({
 			ApplicationId: MOBILE_HUB_APPLICATION,
 			EndpointId: event.endpoint.id,
@@ -42,10 +36,11 @@ const AWS = require('aws-sdk'),
 				Demographic: {
 					AppVersion: event.app.version,
 					Locale: event.endpoint.language,
-					Platform: event.endpoint.platform,
-					Model: userAgent && userAgent.family,
-					ModelVersion: userAgent && userAgent.toVersion(),
-					PlatformVersion: userAgent && userAgent.os.toString()
+					Make: event.endpoint.platform,
+					Platform: event.endpoint.os,
+					PlatformVersion: event.endpoint.osVersion,
+					Model: event.endpoint.runtime,
+					ModelVersion: event.endpoint.runtimeVersion
 				},
 				Location: {
 					Country: event.endpoint.country
