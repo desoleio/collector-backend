@@ -6,7 +6,7 @@ const AWS = require('aws-sdk'),
 	uaParser = require('useragent'),
 	extractKeys = require('./extract-keys'),
 	extractDeviceType = function (headers) {
-		return ['SmartTV', 'Mobile', 'Tablet', 'Desktop'].find(type => headers[`cloudfront-is-${type.toLowerCase()}`] === 'true');
+		return ['SmartTV', 'Mobile', 'Tablet', 'Desktop'].find(type => headers[`cloudfront-is-${type.toLowerCase()}-viewer`] === 'true');
 	},
 	validateEvent = function (desoleEvent) {
 		return desoleEvent; // check fields etc
@@ -20,7 +20,7 @@ const AWS = require('aws-sdk'),
 			desoleEvent.app = extractKeys(body.app, ['name', 'version', 'stage']);
 			desoleEvent.id = lambdaContext.awsRequestId;
 			desoleEvent.receivedAt = Date.now();
-			desoleEvent.referrer = normalizedHeaders.referrer;
+			desoleEvent.referrer = normalizedHeaders.referer;
 			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
 			Object.assign(desoleEvent.endpoint, {
 				country: normalizedHeaders['cloudfront-viewer-country'],
