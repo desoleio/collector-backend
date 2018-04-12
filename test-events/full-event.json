@@ -1,0 +1,27 @@
+{
+  "severity": "error",
+  "stack": "zeka.js:42",
+  "category": "InternalError",
+  "timestamp": 1523446899339,
+  "resource": "https://facebook.com/b/7.y",
+  "tags": {
+    "submitted-from": "kafeterija"
+  },
+  "app": {
+    "name": "console",
+    "version": "6.6.6",
+    "stage": "dev"
+  },
+  "id": "867a1923-3e29-11e8-8ba5-497c3f37209c",
+  "receivedAt": 1523520870620,
+  "endpoint": {
+    "id": "thur-2455-1245-123466",
+    "platform": "MacIntel",
+    "language": "en_GB",
+    "userAgent": "curl/7.54.0",
+    "runtime": "curl",
+    "runtimeVersion": "7.54.0",
+    "os": "Other",
+    "osVersion": "0.0.0"
+  }
+}
