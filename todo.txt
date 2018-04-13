@@ -2,7 +2,8 @@
 
 ## Collector API
 
-* move away from /hello-world
+* move away from /hello-world -> /desole
+* support for the sentry format on /sentry
 * CORS handling
 
 ## APP Repo 
