@@ -30,9 +30,6 @@ const AWS = require('aws-sdk'),
 			ApplicationId: MOBILE_HUB_APPLICATION,
 			EndpointId: event.endpoint.id,
 			EndpointRequest: {
-				Attributes: {
-					'deviceType': event.endpoint.deviceType
-				},
 				Demographic: {
 					AppVersion: event.app.version,
 					Locale: event.endpoint.language,
