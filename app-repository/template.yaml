@@ -1,5 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    Cors: "'*'"
+
 Parameters: 
   CloudWatchNameSpace: 
     Type: String
@@ -33,8 +38,9 @@ Resources:
         ApiEndpointApi:
           Type: Api
           Properties:
-            Path: /hello-world
-            Method: ANY
+            Path: /desole
+            Method: POST
+            RestApiId: !Ref CollectorApiGateway
   CollectorTopic: 
     Type: AWS::SNS::Topic
   S3Publisher:
@@ -100,3 +106,25 @@ Resources:
             Topic: !Ref CollectorTopic
   CollectedEventsStorage:
     Type: AWS::S3::Bucket
+  CollectorApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: 'prod'
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          title:
+            Ref: AWS::StackName
+        paths:
+          /desole:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
+              responses: {}
+Outputs:
+  ApiUrl:
+    Description: URL of your API endpoint
+    Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}"
