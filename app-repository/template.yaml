@@ -22,14 +22,14 @@ Parameters:
     Type: String
     Default: '365'
     Description: The number of days for how long do you want to keep the stored events  
-  BucketEncryption:
+  BucketEncryptionAlgorithm:
     Type: String
     Default: ''
     AllowedValues: 
       - ''
-      - SSE-S3
-      - SSE-KMS
-    Description: Enter empty, SSE-S3, or SSE-KMS. Default is empty.
+      - AES256
+      - AWS:KMS
+    Description: Enter empty, AES256, or AWS:KMS. Default is empty.
 
 Resources:
   CollectorApi:
@@ -126,6 +126,10 @@ Resources:
   CollectedEventsStorage:
     Type: AWS::S3::Bucket
     Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: !Ref BucketEncryptionAlgorithm
       LifecycleConfiguration:
         Rules:
           - ExpirationInDays: !Ref BucketExpiryDays
