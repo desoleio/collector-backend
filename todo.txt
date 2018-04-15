@@ -2,14 +2,13 @@
 
 ## Collector API
 
-* support for the sentry format on /sentry
-* CORS handling
+* support for the sentry format on /sentry (just the format)
+* CORS checking
+* enable npm 5 requiring of dependecies
 
 ## APP Repo 
 
-* s3 options
-  * encryption for storage
-  * expiry
+* s3 encryption for storage
 
 ## S3 publisher
 
