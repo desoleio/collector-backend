@@ -2,14 +2,11 @@
 
 ## Collector API
 
-* move away from /hello-world -> /desole
 * support for the sentry format on /sentry
 * CORS handling
 
 ## APP Repo 
 
-* add output to template.yaml so we have the endpoint
-* memory/timeout for lambda
 * s3 options
   * encryption for storage
   * expiry
@@ -21,7 +18,3 @@
 ## Pinpoint publisher
 
 * save just the first line of stack to pinpoint, not much point doing anything else
-
-
-
-
