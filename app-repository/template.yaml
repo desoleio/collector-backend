@@ -148,6 +148,14 @@ Resources:
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
               responses: {}
+          /sentry:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
+              responses: {}
 Outputs:
   ApiUrl:
     Description: URL of your API endpoint

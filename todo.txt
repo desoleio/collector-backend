@@ -4,7 +4,7 @@
 
 * support for the sentry format on /sentry (just the format)
 * CORS checking
-* enable npm 5 requiring of dependecies
+* enable npm 5 loading of @dependencies
 
 ## APP Repo 
 
