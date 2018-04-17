@@ -3,12 +3,7 @@
 ## Collector API
 
 * support for the sentry format on /sentry (just the format)
-* CORS checking
 * enable npm 5 loading of @dependencies
-
-## APP Repo 
-
-* s3 encryption for storage
 
 ## S3 publisher
 
