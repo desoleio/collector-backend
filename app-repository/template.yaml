@@ -20,7 +20,6 @@ Parameters:
     Description: The name for custom events logged to Pinpoint analytics 
   BucketExpiryDays:
     Type: String
-    Default: '365'
     Description: The number of days for how long do you want to keep the stored events  
   BucketEncryptionAlgorithm:
     Type: String
@@ -30,6 +29,9 @@ Parameters:
       - AES256
       - AWS:KMS
     Description: Enter empty, AES256, or AWS:KMS. Default is empty.
+Conditions:
+    IsBucketExpiryDefined: !Not [ !Equals ['', !Ref BucketExpiryDays]]
+    IsBucketEncryptionDefined: !Not [ !Equals ['', !Ref BucketEncryptionAlgorithm]]
 
 Resources:
   CollectorApi:
@@ -127,13 +129,19 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: !Ref BucketEncryptionAlgorithm
+        !If
+          - IsBucketEncryptionDefined
+          - ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: !Ref BucketEncryptionAlgorithm
+          - !Ref AWS::NoValue
       LifecycleConfiguration:
-        Rules:
-          - ExpirationInDays: !Ref BucketExpiryDays
-            Status: Enabled
+        !If 
+          - IsBucketExpiryDefined
+          - Rules:
+            - ExpirationInDays: !Ref BucketExpiryDays
+              Status: Enabled
+          - !Ref AWS::NoValue
   CollectorApiGateway:
     Type: AWS::Serverless::Api
     Properties:
