@@ -177,5 +177,8 @@ Resources:
               responses: {}
 Outputs:
   ApiUrl:
-    Description: URL of your API endpoint
+    Description: The URL of your API endpoint
     Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}"
+  S3BucketSecureURL:
+    Value: !Join ['', ['https://', !GetAtt [CollectedEventsStorage, DomainName]]]
+    Description: The URL of your S3 Bucket
