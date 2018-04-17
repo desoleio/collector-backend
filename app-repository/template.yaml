@@ -13,7 +13,7 @@ Parameters:
   CorsOrigin:
     Type: String
     Default: "'*'"
-    Description: CORS Origin details
+    Description: CORS Origin, required to be in the following format "'your-origin.com'". With both quote types.
   PinpointEventName:
     Type: String
     Default: Error
