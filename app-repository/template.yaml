@@ -14,6 +14,8 @@ Parameters:
     Type: String
     Default: "'*'"
     Description: CORS Origin, required to be in the following format "'your-origin.com'". With both quote types.
+    AllowedPattern: "'.*?'"
+    ConstraintDescription: Must begin and end with double and single quotes and must be a valid origin (domain).
   PinpointEventName:
     Type: String
     Default: Error
