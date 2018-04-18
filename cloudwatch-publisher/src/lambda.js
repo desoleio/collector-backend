@@ -3,7 +3,7 @@ const AWS = require('aws-sdk'),
 	cloudWatch = new AWS.CloudWatch(),
 	parseSNSEvent = require('@desole/common/src/parse-sns-event'),
 	CLOUDWATCH_NAMESPACE = process.env.CLOUDWATCH_NAMESPACE,
-	toDimension = (name, value) => ({Name: name, Value: value}),
+	toDimension = (name, value) => ({Name: name, Value: value || '-'}),
 	convertToMetricData = function (event) {
 		return {
 			MetricName: 'Count',
