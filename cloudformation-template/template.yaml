@@ -66,12 +66,8 @@ Resources:
         Variables:
           TOPIC_ARN: !Ref CollectorTopic
       Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action:
-                - sns:Publish
-              Resource: !Ref CollectorTopic
+      - SNSPublishMessagePolicy:
+          TopicName: !Ref CollectorTopic
       Events:
         ApiEndpointApi:
           Type: Api
@@ -97,11 +93,8 @@ Resources:
           BUCKET_NAME: !Ref CollectedEventsStorage
           BUCKET_PREFIX: !Ref BucketPrefix
       Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 's3:PutObject'
-              Resource: !Sub 'arn:aws:s3:::${CollectedEventsStorage}/*'
+      - S3CrudPolicy:
+          BucketName: !Ref CollectedEventsStorage
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -115,12 +108,8 @@ Resources:
       Environment:
         Variables:
           CLOUDWATCH_NAMESPACE: !Ref CloudWatchNameSpace
-      Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 'cloudwatch:PutMetricData'
-              Resource: '*'
+      Policies: 
+      - CloudWatchPutMetricPolicy
       Events:
         CollectorSubscribedTopic:
           Type: SNS
