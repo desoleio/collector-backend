@@ -1,11 +1,13 @@
 {
-  "name": "@desole/app-repository",
+  "name": "desole",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "Shell package for cloudformation deployment, not intended to be used directly",
   "main": "lambda.js",
   "scripts": {
-    "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket desole-collector-backend",
-    "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name desole-collector-backend --capabilities CAPABILITY_IAM"
+    "prepackage": "find ./node_modules/ -exec touch '{}' \\;",
+    "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name",
+    "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --parameter-overrides PinpointApplicationId=$npm_package_config_pinpoint_id"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +17,10 @@
     "@desole/pinpoint-publisher": "file:../pinpoint-publisher",
     "@desole/cloudwatch-publisher": "file:../cloudwatch-publisher",
     "@desole/collector-api": "file:../collector-api"
+  },
+  "config": {
+    "bucket_name": "desole-packaging",
+    "cloudformation_stack": "desoleStack",
+    "pinpoint_id": ""
   }
 }
