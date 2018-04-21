@@ -9,6 +9,13 @@ This repository contains a Cloudformation template to deploy the Desole back-end
 * Optionally a Pinpoint (AWS Mobile Hub) Application ID
 * AWS CLI (command line tools)
 
+## Deploy using CloudFormation 
+
+* Go to <https://console.aws.amazon.com/cloudformation/home>
+* Click on `Create Stack`
+* Select the `Specify an Amazon S3 template URL` option
+* Use `https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml` as the template URL
+
 ## Deploying using AWS-CLI and CloudFormation
 
 1. Install the dependencies
