@@ -1,6 +1,8 @@
 # Cloudformation template for Desole back-end deployment
 
-This repository contains a Cloudformation template to deploy the Desole back-end (event collector and standard processing applications) into your AWS account.
+This directory contains a Cloudformation template for the Desole back-end (event collector and standard processing applications). Use this source code to create your own custom bundle for Desole backend.
+
+To deploy using a ready-made template, check out the parent directory [README.md](../README.md)
 
 ## Prerequisites
 
@@ -8,13 +10,6 @@ This repository contains a Cloudformation template to deploy the Desole back-end
 * An S3 Bucket for Deployment
 * Optionally a Pinpoint (AWS Mobile Hub) Application ID
 * AWS CLI (command line tools)
-
-## Deploy using CloudFormation 
-
-* Go to <https://console.aws.amazon.com/cloudformation/home>
-* Click on `Create Stack`
-* Select the `Specify an Amazon S3 template URL` option
-* Use `https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml` as the template URL
 
 ## Deploying using AWS-CLI and CloudFormation
 
