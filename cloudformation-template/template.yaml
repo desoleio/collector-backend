@@ -2,26 +2,12 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
 Parameters: 
-  CloudWatchNameSpace: 
-    Type: String
-    Default: Desole
-    Description: Namespace for CloudWatch Metrics 
-  PinpointApplicationId: 
-    Type: String
-    Default: '' 
-    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics
-  CorsOrigin:
-    Type: String
-    Default: "'*'"
-    Description: CORS Origin, required to be in the following format "'your-origin.com'". With both quote types.
-  PinpointEventName:
-    Type: String
-    Default: Error
-    Description: The name for custom events logged to Pinpoint analytics 
   BucketExpiryDays:
     Type: String
     Default: ''
-    Description: The number of days for how long do you want to keep the stored events  
+    AllowedPattern: ^[0-9]*$
+    ConstraintDescription: Must be a number
+    Description: Expiry time (in days) for events on S3 storage. The event details will be automatically removed from S3 after expiry. Leave empty for no expiration.
   BucketEncryptionAlgorithm:
     Type: String
     Default: ''
@@ -29,15 +15,47 @@ Parameters:
       - ''
       - AES256
       - aws:kms
-    Description: Enter empty, AES256, or aws:kms. Default is empty.
+    Description: Server-side encryption algorithm for your event S3 storage.
   BucketEncryptionKMSKey:
     Type: String
     Default: ''
-    Description: The AWS:KMS Master key which is utilized only when the AWS:KMS bucket encryption is being used
+    Description: The AWS:KMS Master key for S3 server-side encryption. Leave blank if not using AWS:KMS bucket encryption.
+    AllowedPattern: ^$|^arn:aws:kms:.+:.+:.+
+    ConstraintDescription: Must be an AWS KMS Key ARN (eg arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012)
+  BucketPrefix:
+    Type: String
+    Default: archive
+    Description: Storage prefix for S3 event storage
+    MaxLength: 250
+    MinLength: 1
+  CorsOrigin:
+    Type: String
+    Default: "*"
+    Description: Cross-origin resource sharing (CORS) restriction for the event submission Web Api. Restrict to a single web site domain to only allow submissions from that site, or leave as * for open submission. 
+    MaxLength: 250
+    MinLength: 1
+  PinpointApplicationId: 
+    Type: String
+    Default: '' 
+    AllowedPattern: ^[0-9A-Za-z]*$
+    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
+    ConstraintDescription: Only alphanumeric characters allowed
+  PinpointEventName:
+    Type: String
+    Default: Error
+    Description: The name for custom events logged to Pinpoint analytics 
+  CloudWatchNameSpace: 
+    Type: String
+    Default: Desole
+    Description: CloudWatch Metrics Namespace
+    AllowedPattern: ^[0-9A-Za-z\._/-]+$
+    MaxLength: 250
+    MinLength: 1
+    ConstraintDescription: 'Up to 250 characters. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)'
 Conditions:
     IsBucketExpiryDefined: !Not [ !Equals ['', !Ref BucketExpiryDays]]
     IsBucketEncryptionDefined: !Not [ !Equals ['', !Ref BucketEncryptionAlgorithm]]
-
+    IsPinpointDefined: !Not [ !Equals ['', !Ref PinpointApplicationId]]
 Resources:
   CollectorApi:
     Type: AWS::Serverless::Function
@@ -77,6 +95,7 @@ Resources:
       Environment:
         Variables:
           BUCKET_NAME: !Ref CollectedEventsStorage
+          BUCKET_PREFIX: !Ref BucketPrefix
       Policies:
         - Version: 2012-10-17
           Statement:
@@ -109,6 +128,7 @@ Resources:
             Topic: !Ref CollectorTopic
   PinpointPublisher:
     Type: AWS::Serverless::Function
+    Condition: IsPinpointDefined
     Properties:
       Handler: pinpoint-publisher.handler
       Runtime: nodejs8.10
@@ -124,7 +144,7 @@ Resources:
               Resource: '*'
             - Effect: Allow
               Action: 'mobiletargeting:UpdateEndpoint'
-              Resource: '*'
+              Resource: !Sub 'arn:aws:mobiletargeting:*:*:apps/${PinpointApplicationId}/endpoints/*'
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -147,6 +167,7 @@ Resources:
           - IsBucketExpiryDefined
           - Rules:
             - ExpirationInDays: !Ref BucketExpiryDays
+              Prefix: !Ref BucketPrefix 
               Status: Enabled
           - !Ref AWS::NoValue
   CollectorApiGateway:
@@ -154,7 +175,7 @@ Resources:
     Properties:
       StageName: 'prod'
       Cors:
-        AllowOrigin: !Ref CorsOrigin
+        AllowOrigin: !Join [ "", [ "'", !Ref CorsOrigin, "'" ] ]
       DefinitionBody:
         swagger: 2.0
         info:
@@ -169,18 +190,10 @@ Resources:
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
                 responses: {}
-          /sentry:
-            post:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
-                responses: {}
 Outputs:
   ApiUrl:
-    Description: The URL of your API endpoint
-    Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}"
-  S3BucketSecureURL:
-    Value: !Join ['', ['https://', !GetAtt [CollectedEventsStorage, DomainName]]]
-    Description: The URL of your S3 Bucket
+    Description: The URL of your API endpoint -- use this to configure the Desole client
+    Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
+  S3Bucket:
+    Value: !Ref CollectedEventsStorage
+    Description: S3 bucket where the events will be archived 
