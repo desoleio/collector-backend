@@ -6,6 +6,18 @@ This repository contains the back-end components for Desole (event collector and
 
 * Optionally a Pinpoint (AWS Mobile Hub) Application ID
 
+## Deploy using CloudFormation LaunchStack Buttons
+
+Deployment is per region.
+
+  Region | Launch
+  -------|-------
+  US East (N.Virginia) | [![Desole in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml)
+  US West (N.Virginia) | [![Desole in us-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml)
+  EU Central (Frankfurt) | [![Desole in eu-central-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml)
+  Asia Pacific (Sydney) | [![Desole in ap-southeast-2](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging.s3.amazonaws.com/releases/desole-0.0.1.yaml)
+
+
 ## Deploy using CloudFormation 
 
 * Go to <https://console.aws.amazon.com/cloudformation/home>
