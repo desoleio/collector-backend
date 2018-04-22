@@ -19,10 +19,10 @@ To deploy using a ready-made template, check out the parent directory [README.md
   ```
 2. Package the template 
   ```bash
-  npm run package --desole:bucket_name=<S3 Bucket Name>
+  npm run package --desole:bucket_name=<S3 Bucket Name> --desole:region=<AWS REGION>
   ```
 3. Deploy the packaged template
   ```bash
-  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>
+  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
   ```
 
