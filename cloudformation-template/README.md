@@ -7,9 +7,9 @@ To deploy using a ready-made template, check out the parent directory [README.md
 ## Prerequisites
 
 * NPM 3
-* An S3 Bucket for Deployment
-* Optionally a Pinpoint (AWS Mobile Hub) Application ID
-* AWS CLI (command line tools)
+* An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
+* AWS CLI (command line tools), configured to use your account
+* Optionally a Pinpoint (AWS Mobile Hub) Application ID, if you would like to log events to Pinpoint as well for easy dashboards. Create an app using the [AWS Pinpoint Console](https://console.aws.amazon.com/pinpoint/) or using `aws pinpoint create-app` from your command line.
 
 ## Deploying using AWS-CLI and CloudFormation
 
@@ -23,6 +23,6 @@ To deploy using a ready-made template, check out the parent directory [README.md
   ```
 3. Deploy the packaged template
   ```bash
-  npm run test-deploy --desole:bucket_name=desole-upload-1 --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>
+  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>
   ```
 
