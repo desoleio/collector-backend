@@ -196,7 +196,7 @@ Outputs:
     Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
   SNSTopic:
     Value: !Ref CollectorTopic
-    Description: SNS topic name to subscribe to receive the events
+    Description: SNS Topic ARN to subscribe to receive the events
   S3Bucket:
     Value: !Ref CollectedEventsStorage
     Description: S3 bucket where the events will be archived
