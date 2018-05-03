@@ -1,7 +1,7 @@
 {
   "name": "desole",
   "private": true,
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Shell package for cloudformation deployment, not intended to be used directly",
   "main": "lambda.js",
   "scripts": {
@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "@desole/s3-publisher": "file:../s3-publisher",
-    "@desole/pinpoint-publisher": "file:../pinpoint-publisher",
     "@desole/cloudwatch-publisher": "file:../cloudwatch-publisher",
     "@desole/collector-api": "file:../collector-api"
   },

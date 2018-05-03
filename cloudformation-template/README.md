@@ -23,6 +23,10 @@ To deploy using a ready-made template, check out the parent directory [README.md
   ```
 3. Deploy the packaged template
   ```bash
-  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
+  npm run deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
+  ```
+  You can supply overrides for cloudformation parameters using `-- --parameter-overrides` (note the initial `--`), for example:
+  ```bash
+  npm run deploy -- --parameter-overrides BucketEncryptionAlgorithm=AES256
   ```
 

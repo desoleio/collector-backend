@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Parameters: 
+  PinpointApplicationId: 
+    Type: String
+    AllowedPattern: ^[0-9A-Za-z]+$
+    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
+    ConstraintDescription: Only alphanumeric characters allowed
+    MaxLength: 250
+    MinLength: 1
+  PinpointEventName:
+    Type: String
+    Default: Error
+    Description: The name for custom events logged to Pinpoint analytics 
+    MaxLength: 250
+    MinLength: 1
+  CollectorSNSTopic:
+    Type: String
+    Description: Desole collector SNS Event topic ARN
+    AllowedPattern: ^arn:aws:sns:.+:.+:.+$
+    ConstraintDescription: Must be an AWS SNS Topic ARN (eg arn:aws:sns:us-east-1:123456789012:my_corporate_topic)
+    MaxLength: 250
+    MinLength: 1
+Resources:
+  PinpointPublisher:
+    Type: AWS::Serverless::Function
+    Condition: IsPinpointDefined
+    Properties:
+      Handler: pinpoint-publisher.handler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          MOBILE_HUB_APPLICATION: !Ref PinpointApplicationId
+          EVENT_NAME: !Ref PinpointEventName
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action: 'mobileanalytics:PutEvents'
+              Resource: '*'
+            - Effect: Allow
+              Action: 'mobiletargeting:UpdateEndpoint'
+              Resource: !Sub 'arn:aws:mobiletargeting:*:*:apps/${PinpointApplicationId}/endpoints/*'
+      Events:
+        CollectorSubscribedTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref CollectorSNSTopic
