@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
-Parameters:
+Parameters: 
   BucketExpiryDays:
     Type: String
     Default: ''
@@ -31,20 +31,10 @@ Parameters:
   CorsOrigin:
     Type: String
     Default: "*"
-    Description: Cross-origin resource sharing (CORS) restriction for the event submission Web Api. Restrict to a single web site domain to only allow submissions from that site, or leave as * for open submission.
+    Description: Cross-origin resource sharing (CORS) restriction for the event submission Web Api. Restrict to a single web site domain to only allow submissions from that site, or leave as * for open submission. 
     MaxLength: 250
     MinLength: 1
-  PinpointApplicationId:
-    Type: String
-    Default: ''
-    AllowedPattern: ^[0-9A-Za-z]*$
-    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
-    ConstraintDescription: Only alphanumeric characters allowed
-  PinpointEventName:
-    Type: String
-    Default: Error
-    Description: The name for custom events logged to Pinpoint analytics
-  CloudWatchNameSpace:
+  CloudWatchNameSpace: 
     Type: String
     Default: Desole
     Description: CloudWatch Metrics Namespace
@@ -55,7 +45,6 @@ Parameters:
 Conditions:
     IsBucketExpiryDefined: !Not [ !Equals ['', !Ref BucketExpiryDays]]
     IsBucketEncryptionDefined: !Not [ !Equals ['', !Ref BucketEncryptionAlgorithm]]
-    IsPinpointDefined: !Not [ !Equals ['', !Ref PinpointApplicationId]]
 Resources:
   CollectorApi:
     Type: AWS::Serverless::Function
@@ -109,31 +98,7 @@ Resources:
         Variables:
           CLOUDWATCH_NAMESPACE: !Ref CloudWatchNameSpace
       Policies: 
-      - CloudWatchPutMetricPolicy
-      Events:
-        CollectorSubscribedTopic:
-          Type: SNS
-          Properties:
-            Topic: !Ref CollectorTopic
-  PinpointPublisher:
-    Type: AWS::Serverless::Function
-    Condition: IsPinpointDefined
-    Properties:
-      Handler: pinpoint-publisher.handler
-      Runtime: nodejs8.10
-      Environment:
-        Variables:
-          MOBILE_HUB_APPLICATION: !Ref PinpointApplicationId
-          EVENT_NAME: !Ref PinpointEventName
-      Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 'mobileanalytics:PutEvents'
-              Resource: '*'
-            - Effect: Allow
-              Action: 'mobiletargeting:UpdateEndpoint'
-              Resource: !Sub 'arn:aws:mobiletargeting:*:*:apps/${PinpointApplicationId}/endpoints/*'
+      - CloudWatchPutMetricPolicy: {}
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -156,7 +121,7 @@ Resources:
           - IsBucketExpiryDefined
           - Rules:
             - ExpirationInDays: !Ref BucketExpiryDays
-              Prefix: !Ref BucketPrefix
+              Prefix: !Ref BucketPrefix 
               Status: Enabled
           - !Ref AWS::NoValue
   CollectorApiGateway:
@@ -185,4 +150,7 @@ Outputs:
     Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
   S3Bucket:
     Value: !Ref CollectedEventsStorage
-    Description: S3 bucket where the events will be archived
+    Description: S3 bucket where the events will be archived 
+  CollectorSNSTopic:
+    Value: !Ref CollectorTopic
+    Description: SNS Collector Topic for custom integrations

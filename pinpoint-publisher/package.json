@@ -7,6 +7,9 @@
   "files": [
     "src"
   ],
+  "scripts": {
+    "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --parameter-overrides PinpointApplicationId=$npm_package_config_pinpoint_id"
+  },
   "private": true,
   "author": "",
   "license": "MIT",
@@ -16,6 +19,9 @@
   "dependencies": {
     "@desole/common": "file:../common",
     "flat": "^4.0.0"
+  },
+  "config": {
+    "pinpoint_id": ""
   },
   "optionalDependencies": {
     "aws-sdk": "^2.224.1"
