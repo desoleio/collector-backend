@@ -1,10 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
-Globals:
-  Api:
-    Cors: "'*'"
-
 Parameters: 
   BucketExpiryDays:
     Type: String
@@ -133,6 +129,8 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: 'prod'
+      Cors:
+        AllowOrigin: !Join [ "", [ "'", !Ref CorsOrigin, "'" ] ]
       DefinitionBody:
         swagger: 2.0
         info:
