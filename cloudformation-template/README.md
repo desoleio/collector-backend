@@ -1,13 +1,15 @@
 # Cloudformation template for Desole back-end deployment
 
-This repository contains a Cloudformation template to deploy the Desole back-end (event collector and standard processing applications) into your AWS account.
+This directory contains a Cloudformation template for the Desole back-end (event collector and standard processing applications). Use this source code to create your own custom bundle for Desole backend.
+
+To deploy using a ready-made template, check out the parent directory [README.md](../README.md)
 
 ## Prerequisites
 
 * NPM 3
-* An S3 Bucket for Deployment
-* Optionally a Pinpoint (AWS Mobile Hub) Application ID
-* AWS CLI (command line tools)
+* An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
+* AWS CLI (command line tools), configured to use your account
+* Optionally a Pinpoint (AWS Mobile Hub) Application ID, if you would like to log events to Pinpoint as well for easy dashboards. Create an app using the [AWS Pinpoint Console](https://console.aws.amazon.com/pinpoint/) or using `aws pinpoint create-app` from your command line.
 
 ## Deploying using AWS-CLI and CloudFormation
 
@@ -17,10 +19,10 @@ This repository contains a Cloudformation template to deploy the Desole back-end
   ```
 2. Package the template 
   ```bash
-  npm run package --desole:bucket_name=<S3 Bucket Name>
+  npm run package --desole:bucket_name=<S3 Bucket Name> --desole:region=<AWS REGION>
   ```
 3. Deploy the packaged template
   ```bash
-  npm run test-deploy --desole:bucket_name=desole-upload-1 --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>
+  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
   ```
 

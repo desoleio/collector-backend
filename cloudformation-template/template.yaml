@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
-Parameters: 
+Parameters:
   BucketExpiryDays:
     Type: String
     Default: ''
@@ -31,20 +31,20 @@ Parameters:
   CorsOrigin:
     Type: String
     Default: "*"
-    Description: Cross-origin resource sharing (CORS) restriction for the event submission Web Api. Restrict to a single web site domain to only allow submissions from that site, or leave as * for open submission. 
+    Description: Cross-origin resource sharing (CORS) restriction for the event submission Web Api. Restrict to a single web site domain to only allow submissions from that site, or leave as * for open submission.
     MaxLength: 250
     MinLength: 1
-  PinpointApplicationId: 
+  PinpointApplicationId:
     Type: String
-    Default: '' 
+    Default: ''
     AllowedPattern: ^[0-9A-Za-z]*$
     Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
     ConstraintDescription: Only alphanumeric characters allowed
   PinpointEventName:
     Type: String
     Default: Error
-    Description: The name for custom events logged to Pinpoint analytics 
-  CloudWatchNameSpace: 
+    Description: The name for custom events logged to Pinpoint analytics
+  CloudWatchNameSpace:
     Type: String
     Default: Desole
     Description: CloudWatch Metrics Namespace
@@ -156,7 +156,7 @@ Resources:
           - IsBucketExpiryDefined
           - Rules:
             - ExpirationInDays: !Ref BucketExpiryDays
-              Prefix: !Ref BucketPrefix 
+              Prefix: !Ref BucketPrefix
               Status: Enabled
           - !Ref AWS::NoValue
   CollectorApiGateway:
@@ -185,4 +185,4 @@ Outputs:
     Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
   S3Bucket:
     Value: !Ref CollectedEventsStorage
-    Description: S3 bucket where the events will be archived 
+    Description: S3 bucket where the events will be archived
