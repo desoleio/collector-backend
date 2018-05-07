@@ -7,10 +7,12 @@
   "scripts": {
     "update-timestamps": "find ./node_modules/ -exec touch '{}' \\;",
     "prepackage": "npm run update-timestamps && sam validate",
-    "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
+    "package": "echo packaging $npm_package_config_region to $npm_package_config_bucket_name && aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --parameter-overrides PinpointApplicationId=$npm_package_config_pinpoint_id --region $npm_package_config_region",
     "upload": "aws s3 cp output.yaml s3://$npm_package_config_bucket_name/$npm_package_version/$npm_package_name.yaml --acl public-read",
-    "make-public": "for c in $(aws s3api list-objects --bucket $npm_package_config_bucket_name --prefix $npm_package_version --output text --query Contents[].Key); do echo making $c public; aws s3api put-object-acl --acl public-read --bucket $npm_package_config_bucket_name --key $c; done"
+    "make-public": "for c in $(aws s3api list-objects --bucket $npm_package_config_bucket_name --prefix $npm_package_version --output text --query Contents[].Key); do echo making $c public; aws s3api put-object-acl --acl public-read --bucket $npm_package_config_bucket_name --key $c; done",
+    "release": "npm run package --desole:region=$npm_package_config_region --desole:bucket_name=$npm_package_config_bucket_name && npm run upload --desole:region=$npm_package_config_region --desole:bucket_name=$npm_package_config_bucket_name && npm run make-public --desole:region=$npm_package_config_region --desole:bucket_name=$npm_package_config_bucket_name",
+    "regions": "for region in $(echo $npm_package_config_deployment_regions); do npm run release --desole:region=$region --desole:bucket_name=desole-packaging-$region; done;"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +24,8 @@
     "@desole/collector-api": "file:../collector-api"
   },
   "config": {
-    "bucket_name": "desole-packaging",
+    "bucket_name": "desole-packaging-us-east-1",
+    "deployment_regions": "us-east-1 eu-central-1 us-west-1 ap-southeast-2",
     "cloudformation_stack": "desoleStack",
     "region": "us-east-1",
     "pinpoint_id": ""
