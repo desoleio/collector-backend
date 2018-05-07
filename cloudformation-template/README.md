@@ -23,6 +23,17 @@ To deploy using a ready-made template, check out the parent directory [README.md
   ```
 3. Deploy the packaged template
   ```bash
-  npm run test-deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
+  npm run deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION>
   ```
+
+## Overriding other parameters
+
+You can also override additional CloudFormation template parameters by using `-- --parameter-overrides <NAME>=<VALUE>` after the `deploy` command. Note the two `--` before the other parameters, this splits NPM params from the embedded command parameters. For example, to set the default event storage bucket encryption, use:
+
+```bash
+npm run deploy --desole:cloudformation_stack=<STACK NAME> --desole:pinpoint_id=<PINPOINT APP ID>  --desole:region=<AWS REGION> -- --parameter-overrides BucketEncryption=AES256
+```
+
+For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
+
 

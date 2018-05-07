@@ -1,11 +1,12 @@
 {
   "name": "desole",
   "private": true,
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Shell package for cloudformation deployment, not intended to be used directly",
   "main": "lambda.js",
   "scripts": {
-    "prepackage": "find ./node_modules/ -exec touch '{}' \\;",
+    "update-timestamps": "find ./node_modules/ -exec touch '{}' \\;",
+    "prepackage": "npm run update-timestamps && sam validate",
     "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --parameter-overrides PinpointApplicationId=$npm_package_config_pinpoint_id --region $npm_package_config_region",
     "upload": "aws s3 cp output.yaml s3://$npm_package_config_bucket_name/$npm_package_version/$npm_package_name.yaml --acl public-read",
