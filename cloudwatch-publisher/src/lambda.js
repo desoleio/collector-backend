@@ -4,7 +4,7 @@ const AWS = require('aws-sdk'),
 	parseSNSEvent = require('@desole/common/src/parse-sns-event'),
 	CLOUDWATCH_NAMESPACE = process.env.CLOUDWATCH_NAMESPACE,
 	toDimension = (name, value) => ({Name: name, Value: value || '-'}),
-	convertToMetricData = function (event) {
+	convertToSeverityMetricData = function (event) {
 		return {
 			MetricName: 'Count',
 			Unit: 'Count',
@@ -17,11 +17,24 @@ const AWS = require('aws-sdk'),
 			StorageResolution: 1,
 			Timestamp: new Date(event.receivedAt)
 		};
-
+	},
+	convertToCategoryMetricData = function (event) {
+		return {
+			MetricName: 'Count',
+			Unit: 'Count',
+			Value: 1.0,
+			Dimensions: [
+				toDimension('App Name', event.app.name),
+				toDimension('App Stage', event.app.stage),
+				toDimension('Category', event.category)
+			],
+			StorageResolution: 1,
+			Timestamp: new Date(event.receivedAt)
+		};
 	},
 	storeSingleEvent = event => {
 		const params = {
-			MetricData: [convertToMetricData(event)],
+			MetricData: [convertToSeverityMetricData(event), convertToCategoryMetricData(event)],
 			Namespace: CLOUDWATCH_NAMESPACE
 		};
 		return cloudWatch.putMetricData(params).promise();
