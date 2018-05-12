@@ -25,7 +25,7 @@ Parameters:
   BucketPrefix:
     Type: String
     Default: archive
-    Description: Prefix for S3 event storage
+    Description: Storage prefix for S3 event storage
     MaxLength: 250
     MinLength: 1
   CorsOrigin:
@@ -41,21 +41,10 @@ Parameters:
     AllowedPattern: ^[0-9A-Za-z\._/-]+$
     MaxLength: 250
     MinLength: 1
-    ConstraintDescription: 'Up to 250 characters. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)'    
-  PinpointApplicationId:
-    Type: String
-    Default: ''
-    AllowedPattern: ^[0-9A-Za-z]*$
-    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
-    ConstraintDescription: Only alphanumeric characters allowed
-  PinpointEventName:
-    Type: String
-    Default: Error
-    Description: The name for custom events logged to Pinpoint analytics
+    ConstraintDescription: 'Up to 250 characters. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)'
 Conditions:
     IsBucketExpiryDefined: !Not [ !Equals ['', !Ref BucketExpiryDays]]
     IsBucketEncryptionDefined: !Not [ !Equals ['', !Ref BucketEncryption]]
-    IsPinpointDefined: !Not [ !Equals ['', !Ref PinpointApplicationId]]
     IsBucketEncryptionKMS: !Equals ['aws:kms', !Ref BucketEncryption]
 Resources:
   CollectorApi:
@@ -67,12 +56,8 @@ Resources:
         Variables:
           TOPIC_ARN: !Ref CollectorTopic
       Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action:
-                - sns:Publish
-              Resource: !Ref CollectorTopic
+      - SNSPublishMessagePolicy:
+          TopicName: !Ref CollectorTopic
       Events:
         ApiEndpointApi:
           Type: Api
@@ -98,11 +83,8 @@ Resources:
           BUCKET_NAME: !Ref CollectedEventsStorage
           BUCKET_PREFIX: !Ref BucketPrefix
       Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 's3:PutObject'
-              Resource: !Sub 'arn:aws:s3:::${CollectedEventsStorage}/*'
+      - S3CrudPolicy:
+          BucketName: !Ref CollectedEventsStorage
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -117,35 +99,7 @@ Resources:
         Variables:
           CLOUDWATCH_NAMESPACE: !Ref CloudWatchNameSpace
       Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 'cloudwatch:PutMetricData'
-              Resource: '*'
-      Events:
-        CollectorSubscribedTopic:
-          Type: SNS
-          Properties:
-            Topic: !Ref CollectorTopic
-  PinpointPublisher:
-    Type: AWS::Serverless::Function
-    Condition: IsPinpointDefined
-    Properties:
-      Handler: pinpoint-publisher.handler
-      Runtime: nodejs8.10
-      Environment:
-        Variables:
-          MOBILE_HUB_APPLICATION: !Ref PinpointApplicationId
-          EVENT_NAME: !Ref PinpointEventName
-      Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action: 'mobileanalytics:PutEvents'
-              Resource: '*'
-            - Effect: Allow
-              Action: 'mobiletargeting:UpdateEndpoint'
-              Resource: !Sub 'arn:aws:mobiletargeting:*:*:apps/${PinpointApplicationId}/endpoints/*'
+      - CloudWatchPutMetricPolicy: {}
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -195,9 +149,9 @@ Outputs:
   ApiUrl:
     Description: The URL of your API endpoint -- use this to configure the Desole client
     Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
-  SNSTopic:
-    Value: !Ref CollectorTopic
-    Description: SNS Collector Topic for custom integrations
   S3Bucket:
     Value: !Ref CollectedEventsStorage
     Description: S3 bucket where the events will be archived
+  CollectorSNSTopic:
+    Value: !Ref CollectorTopic
+    Description: SNS Collector Topic for custom integrations
