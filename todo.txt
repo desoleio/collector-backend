@@ -5,10 +5,6 @@
 * support for the sentry format on /sentry (just the format)
 * enable npm 5 loading of @dependencies
 
-## S3 publisher
-
-* apply encryption if required during save
-
 ## Pinpoint publisher
 
 * save just the first line of stack to pinpoint, not much point doing anything else
