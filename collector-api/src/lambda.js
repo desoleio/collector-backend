@@ -39,21 +39,37 @@ const AWS = require('aws-sdk'),
 			console.log(e);
 			return false;
 		}
+	},
+	htmlResponse = function (body, requestedCode) {
+		const code = requestedCode || (body ? 200 : 204);
+		return {
+			statusCode: code,
+			body: body || '',
+			headers: {
+				'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
+				'Access-Control-Allow-Methods': 'OPTIONS,POST',
+				'Access-Control-Allow-Origin': process.env.CORS_ORIGIN,
+				'Access-Control-Max-Age': '86400'
+			}
+		};
 	};
 
 exports.handler = (event, context) => {
+	if (event.httpMethod === 'OPTIONS') {
+		return Promise.resolve(htmlResponse());
+	}
 	const desoleEvent = extract(event, context);
 	if (!desoleEvent) {
-		return Promise.resolve({status: 400, body: 'invalid-args'});
+		return Promise.resolve(htmlResponse('invalid-args', 400));
 	}
 	return sns.publish({
 		Message: JSON.stringify(desoleEvent),
 		TopicArn: TOPIC_ARN
 	})
 	.promise()
-	.then(() => ({statusCode: 204, body: ''}))
+	.then(() => htmlResponse())
 	.catch(e => {
 		console.log(e);
-		return {statusCode: 500, body: 'server-error'};
+		return htmlResponse('server-error', 500);
 	});
 };

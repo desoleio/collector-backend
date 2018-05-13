@@ -26,7 +26,7 @@ const AWS = require('aws-sdk'),
 			Dimensions: [
 				toDimension('App Name', event.app.name),
 				toDimension('App Stage', event.app.stage),
-				toDimension('Category', event.category)
+				toDimension('Type', event.type)
 			],
 			StorageResolution: 1,
 			Timestamp: new Date(event.receivedAt)

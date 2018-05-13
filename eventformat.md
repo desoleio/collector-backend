@@ -21,7 +21,7 @@
   * purpose: detailed error stack trace
   * example: info.js:10
   * collected at: client
-* category
+* type
   * purpose: error code classification
   * example: SyntaxError
   * collected at: client

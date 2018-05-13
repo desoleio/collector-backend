@@ -55,16 +55,21 @@ Resources:
       Environment:
         Variables:
           TOPIC_ARN: !Ref CollectorTopic
+          CORS_ORIGIN: !Ref CorsOrigin
       Policies:
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt CollectorTopic.TopicName
       Events:
-        ApiEndpointApi:
+        PostResource:
           Type: Api
           Properties:
             Path: /desole
             Method: POST
-            RestApiId: !Ref CollectorApiGateway
+        OptionsResource:
+          Type: Api
+          Properties:
+            Path: /desole
+            Method: OPTIONS
   CollectorTopic: 
     Type: AWS::SNS::Topic
   S3Publisher:
@@ -119,30 +124,10 @@ Resources:
               Prefix: !Ref BucketPrefix
               Status: Enabled
           - !Ref AWS::NoValue
-  CollectorApiGateway:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: 'prod'
-      Cors:
-        AllowOrigin: !Join [ "", [ "'", !Ref CorsOrigin, "'" ] ]
-      DefinitionBody:
-        swagger: 2.0
-        info:
-          title:
-            Ref: AWS::StackName
-        paths:
-          /desole:
-            post:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CollectorApi.Arn}/invocations
-                responses: {}
 Outputs:
   ApiUrl:
     Description: The URL of your API endpoint -- use this to configure the Desole client
-    Value: !Sub "https://${CollectorApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${CollectorApiGateway.Stage}/desole"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ServerlessRestApiProdStage}/desole"
   S3Bucket:
     Value: !Ref CollectedEventsStorage
     Description: S3 bucket where the events will be archived
