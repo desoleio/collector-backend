@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Parameters: 
+  CollectorSNSTopic:
+    Type: String
+    Description: Desole collector SNS Event topic ARN
+    AllowedPattern: ^arn:aws:sns:.+:.+:.+$
+    ConstraintDescription: Must be an AWS SNS Topic ARN (eg arn:aws:sns:us-east-1:123456789012:my_corporate_topic)
+    MaxLength: 250
+    MinLength: 1
+  IndexName:
+    Type: String
+    Default: Desole
+    Description: The ElasticSearch index name
+    MaxLength: 250
+    MinLength: 1
+  DocumentType:
+    Type: String
+    Default: Error
+    Description: The ElasticSearch document type for Desole events
+    MaxLength: 250
+    MinLength: 1
+
+Resources:
+  ESDomain: 
+    Type: AWS::Elasticsearch::Domain
+    Properties:
+      ElasticsearchClusterConfig: 
+        InstanceCount: 1
+        InstanceType: t2.micro.elasticsearch
+      EBSOptions: 
+        EBSEnabled: true
+        Iops: 0
+        VolumeSize: 10
+        VolumeType: standard
+  EsPublisher:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/lambda.handler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          ES_INDEX_NAME: !Ref IndexName
+          ES_DOCUMENT_TYPE: !Ref DocumentType
+          ES_DOMAIN_NAME: !GetAtt ESDomain.DomainEndpoint
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:  
+                - es:ESHttpPost
+                - es:ESHttpPut
+              Resource: !Sub '${ESDomain.DomainArn}/*'
+      Events:
+        CollectorSubscribedTopic:
+          Type: SNS
+          Properties:
+            Topic: !Ref CollectorSNSTopic
+Outputs:
+  DomainArn:
+    Value: !GetAtt ESDomain.DomainArn
+  DomainEndpoint:
+    Value: !GetAtt ESDomain.DomainEndpoint

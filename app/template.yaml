@@ -12,10 +12,10 @@ Parameters:
     Type: String
     Default: AES256
     AllowedValues: 
-      - ''
+      - None
       - AES256
       - aws:kms
-    Description: Server-side encryption algorithm for your event S3 storage.
+    Description: Server-side encryption algorithm for your event S3 storage. Select AES256 for S3 managed keys, or AWS:KMS for KMS managed keys
   BucketEncryptionKMSKey:
     Type: String
     Default: ''
@@ -44,7 +44,7 @@ Parameters:
     ConstraintDescription: 'Up to 250 characters. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)'
 Conditions:
     IsBucketExpiryDefined: !Not [ !Equals ['', !Ref BucketExpiryDays]]
-    IsBucketEncryptionDefined: !Not [ !Equals ['', !Ref BucketEncryption]]
+    IsBucketEncryptionDefined: !Not [ !Equals ['None', !Ref BucketEncryption]]
     IsBucketEncryptionKMS: !Equals ['aws:kms', !Ref BucketEncryption]
 Resources:
   CollectorApi:

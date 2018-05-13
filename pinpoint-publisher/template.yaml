@@ -24,7 +24,6 @@ Parameters:
 Resources:
   PinpointPublisher:
     Type: AWS::Serverless::Function
-    Condition: IsPinpointDefined
     Properties:
       Handler: src/lambda.handler
       Runtime: nodejs8.10
