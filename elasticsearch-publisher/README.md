@@ -32,13 +32,14 @@ Change the `template.yaml` to modify the ElasticSearch instance size, volume and
   ```
 2. Package the template 
   ```bash
-  npm run package --@desole/es-publisher:bucket_name=<S3 Bucket Name> --@desole/es-publisher:region=<AWS REGION>
+  aws cloudformation package --template-file template.yaml --output-template-file output.yaml
   ```
 3. Deploy the packaged template
   ```bash
-  npm run deploy --@desole/es-publisher:cloudformation_stack=<STACK NAME> --@desole/es-publisher:region=<AWS REGION> --@desole/es-publisher:pinpoint_id=<APP ID>
+  aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> --parameter-overrides CollectorSNSTopic=<SNS TOPIC ARN>
   ```
 
-You can also override additional CloudFormation template parameters by using `-- --parameter-overrides <NAME>=<VALUE>` after the `deploy` command. Note the two `--` before the other parameters, this splits NPM params from the embedded command parameters. For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
+For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
+
 
 

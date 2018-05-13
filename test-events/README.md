@@ -1,6 +1,6 @@
 # Test events
 
 ```
-curl -X POST https://pt8uhzwsci.execute-api.us-east-1.amazonaws.com/Prod/hello-world -H "Content-Type: application/json" -i --data @from-browser-to-api.json
+curl -X POST https://<API URL>/prod/desole -H "Content-Type: application/json" -i --data @from-browser-to-api.json
 ```
 

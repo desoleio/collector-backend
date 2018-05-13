@@ -2,6 +2,7 @@
 const AWS = require('aws-sdk'),
 	elasticsearch = require('elasticsearch'),
 	awsES = require('http-aws-es'),
+	util = require('util'),
 	parseSNSEvent = require('@desole/common/src/parse-sns-event'),
 	myCredentials = new AWS.EnvironmentCredentials('AWS'),
 	index = process.env.ES_INDEX_NAME,
@@ -14,14 +15,20 @@ const AWS = require('aws-sdk'),
 			credentials: myCredentials
 		}
 	}),
-	createPromise = util.promisify(client.create),
 	storeSingleEvent = event => {
-		console.log('storing', index, event.id);
-		return createPromise({
+		const params = {
 			index: index,
 			type: documentType,
 			id: event.id,
 			body: event
+		};
+		return new Promise((resolve, reject) => {
+			client.create(params, (err, result) => {
+				if (err) {
+					return reject(err);
+				}
+				resolve(result);
+			});
 		});
 	};
 

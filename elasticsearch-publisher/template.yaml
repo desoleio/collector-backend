@@ -10,14 +10,18 @@ Parameters:
     MinLength: 1
   IndexName:
     Type: String
-    Default: Desole
+    Default: desole
     Description: The ElasticSearch index name
+    AllowedPattern: ^[a-z]+$
+    ConstraintDescription: 'Must be lowercase latin (ascii) string, no numbers or uppercase letters allowed'
     MaxLength: 250
     MinLength: 1
   DocumentType:
     Type: String
-    Default: Error
+    Default: error
+    AllowedPattern: ^[a-z]+$
     Description: The ElasticSearch document type for Desole events
+    ConstraintDescription: 'Must be lowercase latin (ascii) string, no numbers or uppercase letters allowed'
     MaxLength: 250
     MinLength: 1
 

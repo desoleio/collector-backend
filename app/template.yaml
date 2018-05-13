@@ -56,19 +56,13 @@ Resources:
         Variables:
           TOPIC_ARN: !Ref CollectorTopic
       Policies:
-      - SNSPublishMessagePolicy:
-          TopicName: !Ref CollectorTopic
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt CollectorTopic.TopicName
       Events:
         ApiEndpointApi:
           Type: Api
           Properties:
             Path: /desole
-            Method: POST
-            RestApiId: !Ref CollectorApiGateway
-        PostSentry:
-          Type: Api
-          Properties:
-            Path: /sentry
             Method: POST
             RestApiId: !Ref CollectorApiGateway
   CollectorTopic: 
@@ -83,8 +77,8 @@ Resources:
           BUCKET_NAME: !Ref CollectedEventsStorage
           BUCKET_PREFIX: !Ref BucketPrefix
       Policies:
-      - S3CrudPolicy:
-          BucketName: !Ref CollectedEventsStorage
+        - S3CrudPolicy:
+            BucketName: !Ref CollectedEventsStorage
       Events:
         CollectorSubscribedTopic:
           Type: SNS
@@ -99,7 +93,7 @@ Resources:
         Variables:
           CLOUDWATCH_NAMESPACE: !Ref CloudWatchNameSpace
       Policies:
-      - CloudWatchPutMetricPolicy: {}
+        - CloudWatchPutMetricPolicy: {}
       Events:
         CollectorSubscribedTopic:
           Type: SNS
