@@ -10,8 +10,9 @@ To deploy using a ready-made template, check out the parent directory [README.md
 * An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
 * AWS CLI (command line tools), configured to use your account
 
-
 ## Deploying using AWS-CLI and CloudFormation
+
+For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
 
 1. Install the dependencies
   ```bash
@@ -19,21 +20,11 @@ To deploy using a ready-made template, check out the parent directory [README.md
   ```
 2. Package the template 
   ```bash
-  npm run package --@desole/app:bucket_name=<S3 Bucket Name> --@desole/app:region=<AWS REGION>
+  aws cloudformation package --template-file template.yaml --output-template-file output.yaml
   ```
 3. Deploy the packaged template
   ```bash
-  npm run deploy --@desole/app:cloudformation_stack=<STACK NAME> --@desole/app:region=<AWS REGION>
+  aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> 
   ```
 
-## Overriding other parameters
-
-You can also override additional CloudFormation template parameters by using `-- --parameter-overrides <NAME>=<VALUE>` after the `deploy` command. Note the two `--` before the other parameters, this splits NPM params from the embedded command parameters. For example, to set the default event storage bucket encryption, use:
-
-```bash
-npm run deploy --desole:cloudformation_stack=<STACK NAME> --desole:region=<AWS REGION> -- --parameter-overrides BucketEncryption=AES256
-```
-
-For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
-
-
+You can also override CloudFormation template parameters by using `-- --parameter-overrides <NAME>=<VALUE>` after the `deploy` command. For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
