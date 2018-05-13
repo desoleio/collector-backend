@@ -1,5 +1,8 @@
 # Desole ElasticSearch publisher
 
+
+![](https://desole.io/images/elasticsearch.png)
+
 This publisher submits Desole events to AWS ElasticSearch, where you can query and search them easily. The repository contains an example of a CloudFormation template which you can deploy with a single click, or modify to fit your needs.
 
 ## Deploy the ElasticSearch Publisher using CloudFormation 

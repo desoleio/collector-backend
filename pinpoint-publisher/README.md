@@ -1,5 +1,8 @@
 # Desole Pinpoint publisher
 
+
+![](https://desole.io/images/pinpoint.png)
+
 This publisher submits Desole events to AWS Pinpoint, where you can use Pinpoint analytics dashboards (formerly AWS Mobile Analytics) to drill down into various dimensions of the events, and create automated customer engagement campaigns based on Desole events -- for example, send everyone who received a particular error an e-mail.
 
 To use this publisher, you'll need a Pinpoint (AWS Mobile Hub) Application ID. Create an app using the [AWS Pinpoint Console](https://console.aws.amazon.com/pinpoint/) or using `aws pinpoint create-app` from your command line. For example,

@@ -1,6 +1,6 @@
 # Desole collector back-end
 
-![Desole Logo](https://www.desole.io/images/desole-logo.png)
+![](https://desole.io/images/desole-arch-2.png)
 
 This repository contains the back-end components for Desole: the event collector API and the standard publishers, including a Cloudformation template you can use to deploy the Desole back-end into your AWS account.
 
