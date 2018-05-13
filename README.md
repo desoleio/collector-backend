@@ -4,6 +4,10 @@
 
 This repository contains the back-end components for Desole: the event collector API and the standard publishers, including a Cloudformation template you can use to deploy the Desole back-end into your AWS account.
 
+## Deploy using the AWS Serverless App Repo
+
+Head over to the [Desole App](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:145266761615:applications~Desole) on the AWS Serverless App repo, click `Deploy` and follow the wizard to configure the app.
+
 ## Deploy the standard app using CloudFormation 
 
 The standard app includes the CloudWatch and S3 publishers.
