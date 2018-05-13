@@ -10,7 +10,7 @@ Parameters:
     Description: Expiry time (in days) for events on S3 storage. The event details will be automatically removed from S3 after expiry. Leave empty for no expiration.
   BucketEncryption:
     Type: String
-    Default: ''
+    Default: AES256
     AllowedValues: 
       - ''
       - AES256
