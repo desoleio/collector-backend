@@ -1,8 +1,10 @@
 # Desole collector back-end
 
+Desole is an error-tracking system you can install in your AWS account, with just a few clicks. It enables organisations to track application exceptions and errors without having to choose between the convenience of software-as-a-service and the security of a self-hosted solution. You fully control the data, so it is easy to enforce compliance, encryption and data security requirements. At the same time, Desole uses highly-scalable AWS resources that can easily handle massive traffic, and auto-size on demand, so you do not have to worry about operating costs or administration. Check out <https://desole.io> for more information.
+
 ![](https://desole.io/images/desole-arch-2.png)
 
-This repository contains the back-end components for Desole: the event collector API and the standard publishers, including a Cloudformation template you can use to deploy the Desole back-end into your AWS account.
+This repository contains the back-end components for Desole: the event collector API and the standard publishers, including a Cloudformation template you can use to deploy the Desole back-end into your AWS account. Check out <https://desole.io> for more information on how to set up the client collectors.
 
 ## Deploy using the AWS Serverless App Repo
 
