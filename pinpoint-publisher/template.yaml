@@ -4,7 +4,7 @@ Parameters:
   PinpointApplicationId: 
     Type: String
     AllowedPattern: ^[0-9A-Za-z]+$
-    Description: Pinpoint (Mobile Hub) Application ID. Leave blank if you do not want to log events to Pinpoint analytics.
+    Description: Pinpoint (Mobile Hub) Application ID.
     ConstraintDescription: Only alphanumeric characters allowed
     MaxLength: 250
     MinLength: 1
