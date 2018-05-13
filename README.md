@@ -17,13 +17,7 @@ The standard app includes the CloudWatch and S3 publishers.
 
 Check out the [app/README.md](app/README.md) for information on deploying your own custom bundle into other regions.
 
-## Deploy the Pinpoint Publisher using CloudFormation 
+## Deploy the optional publishers
 
-  Region | Launch
-  -------|-------
-  US East (N.Virginia) | [![Pinpoint publisher in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging-us-east-1.s3.amazonaws.com/1.0.0/@desole/pinpoint-publisher.yaml)
-  EU Central (Frankfurt) | [![Pinpoint publisher in eu-central-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging-eu-central-1.s3.amazonaws.com/1.0.0/@desole/pinpoint-publisher.yaml)
-  US West (N. California) | [![Pinpoint publisher in us-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging-us-west-1.s3.amazonaws.com/1.0.0/@desole/pinpoint-publisher.yaml)
-  Asia Pacific (Sydney) | [![Pinpoint publisher in ap-southeast-2](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/create/review?stackName=desole&templateURL=https://desole-packaging-ap-southeast-2.s3.amazonaws.com/1.0.0/@desole/pinpoint-publisher.yaml)
-
-Check out the [pinpoint-publisher/README.md](pinpoint-publisher/README.md) for information on deploying your own custom bundle into other regions.
+* Deploy the [ElasticSearch publisher](elasticsearch-publisher/README.md) to enable easy querying and searching
+* Deploy the [PinPoint publisher](pinpoint-publisher/README.md) to enable automated engagement campaigns and dashboards to drill down into user demographics 
