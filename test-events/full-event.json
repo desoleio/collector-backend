@@ -1,27 +1,28 @@
 {
   "severity": "error",
-  "stack": "zeka.js:42",
-  "category": "InternalError",
-  "timestamp": 1523446899339,
-  "resource": "https://facebook.com/b/7.y",
-  "tags": {
-    "submitted-from": "kafeterija"
-  },
+  "stack": "ReferenceError: unknownFunction is not defined\n    at HTMLButtonElement.<anonymous> (http://localhost:4000/scripts/runtime-errors.js:6:2)",
+  "type": "ReferenceError",
+  "timestamp": 1526242080425,
+  "resource": "http://localhost:4000/runtime-js-errors.html",
+  "tags": {},
   "app": {
-    "name": "console",
-    "version": "6.6.6",
+    "name": "DesoleTest",
+    "version": "4.5.6",
     "stage": "dev"
   },
-  "id": "867a1923-3e29-11e8-8ba5-497c3f37209c",
-  "receivedAt": 1523520870620,
+  "id": "55fe2e61-56e9-11e8-819c-d55675ec3410",
+  "receivedAt": 1526242080499,
+  "referrer": "http://localhost:4000/runtime-js-errors.html",
   "endpoint": {
-    "id": "thur-2455-1245-123466",
+    "id": "51a246fa-f755-41b5-9fea-2b8c80baa8bf",
     "platform": "MacIntel",
-    "language": "en_GB",
-    "userAgent": "curl/7.54.0",
-    "runtime": "curl",
-    "runtimeVersion": "7.54.0",
-    "os": "Other",
-    "osVersion": "0.0.0"
+    "language": "en-GB",
+    "country": "PL",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36",
+    "deviceType": "Desktop",
+    "runtime": "Chrome",
+    "runtimeVersion": "66.0.3359",
+    "os": "Mac OS X",
+    "osVersion": "10.13.4"
   }
 }

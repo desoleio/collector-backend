@@ -18,7 +18,7 @@ const AWS = require('aws-sdk'),
 			Timestamp: new Date(event.receivedAt)
 		};
 	},
-	convertToCategoryMetricData = function (event) {
+	convertToTypeMetricData = function (event) {
 		return {
 			MetricName: 'Count',
 			Unit: 'Count',
@@ -34,7 +34,7 @@ const AWS = require('aws-sdk'),
 	},
 	storeSingleEvent = event => {
 		const params = {
-			MetricData: [convertToSeverityMetricData(event), convertToCategoryMetricData(event)],
+			MetricData: [convertToSeverityMetricData(event), convertToTypeMetricData(event)],
 			Namespace: CLOUDWATCH_NAMESPACE
 		};
 		return cloudWatch.putMetricData(params).promise();

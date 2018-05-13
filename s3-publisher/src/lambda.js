@@ -9,7 +9,7 @@ const AWS = require('aws-sdk'),
 			year = date.getFullYear(),
 			month = date.getMonth() + 1,
 			day = date.getDate();
-		return [BUCKET_PREFIX, event.app.name, event.app.stage, year, month, day, event.severity, event.category, event.id].join('/');
+		return [BUCKET_PREFIX, event.app.name, event.app.stage, year, month, day, event.severity, event.type, event.id].join('/');
 	},
 	storeSingleEvent = event => {
 		return s3.putObject({

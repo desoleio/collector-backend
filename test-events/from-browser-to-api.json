@@ -1,20 +1,19 @@
 {
- "severity": "fatal",
- "stack": "peka.js:42",
- "category": "SyntaxError",
- "timestamp": 1523446898339,
- "resource": "https://google.com/b/7.y",
- "app": {
-    "name": "console",
-    "version": "6.6.6",
-    "stage": "dev"
- },
- "tags": {
-    "submitted-from": "kafeterija"
- },
- "endpoint": {
-    "id": "thur-2455-1245-123466",
-    "language": "en_GB",
-    "platform": "MacIntel"
- }
+   "type" : "Error",
+   "timestamp" : 1526242077032,
+   "resource" : "http://localhost:4000/runtime-js-errors.html",
+   "app" : {
+      "name" : "DesoleTest",
+      "stage" : "dev",
+      "version" : "4.5.6"
+   },
+   "tags" : {},
+   "severity" : "error",
+   "stack" : "Error: uncaughtException\n    at HTMLButtonElement.<anonymous> (http://localhost:4000/scripts/runtime-errors.js:2:8)",
+   "message" : "Uncaught Error: uncaughtException",
+   "endpoint" : {
+      "platform" : "MacIntel",
+      "language" : "en-GB",
+      "id" : "63def883-ad8c-4093-a496-8ea5ee5189d8"
+   }
 }
