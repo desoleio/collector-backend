@@ -1,10 +1,8 @@
 # Desole.io event format
 
-
-## Notes
-
 * All values are strings unless specified otherwise
 * All values are mandatory in the SNS Event unless specified otherwise
+* Check out [test events](/test-events) for examples
 
 ## Fields
 
