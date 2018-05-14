@@ -27,4 +27,4 @@ For a detailed list of supported parameters, check out [`template.yaml`](templat
   aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> 
   ```
 
-You can also override CloudFormation template parameters by using `-- --parameter-overrides <NAME>=<VALUE>` after the `deploy` command. For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
+You can also override CloudFormation template parameters by using `--parameter-overrides <NAME>=<VALUE>` after the `deploy` command. For a detailed list of supported parameters, check out [`template.yaml`](template.yaml)
