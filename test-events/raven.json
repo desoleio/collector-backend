@@ -1,0 +1,53 @@
+{
+   "extra" : {
+      "session:duration" : 2491
+   },
+   "exception" : {
+      "values" : [
+         {
+            "type" : "Error",
+            "value" : "uncaughtException",
+            "stacktrace" : {
+               "frames" : [
+                  {
+                     "in_app" : false,
+                     "filename" : "https://cdn.ravenjs.com/3.25.2/raven.min.js",
+                     "function" : "HTMLButtonElement.d",
+                     "colno" : 4706,
+                     "lineno" : 2
+                  },
+                  {
+                     "lineno" : 2,
+                     "colno" : 8,
+                     "in_app" : true,
+                     "filename" : "http://localhost:4000/scripts/runtime-errors.js",
+                     "function" : "HTMLButtonElement.<anonymous>"
+                  }
+               ]
+            }
+         }
+      ]
+   },
+   "logger" : "javascript",
+   "trimHeadFrames" : 0,
+   "event_id" : "6d070fc770664472aafed7c17a01465b",
+   "request" : {
+      "url" : "http://localhost:4000/runtime-js-errors.html",
+      "headers" : {
+         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+         "Referer" : "http://localhost:4000/"
+      }
+   },
+   "project" : "desole",
+   "transaction" : "http://localhost:4000/scripts/runtime-errors.js",
+   "breadcrumbs" : {
+      "values" : [
+         {
+            "timestamp" : 1526975874.59,
+            "category" : "ui.click",
+            "message" : "body > button#uncaughtException"
+         }
+      ]
+   },
+   "platform" : "javascript"
+}
