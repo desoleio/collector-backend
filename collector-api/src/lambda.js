@@ -2,11 +2,8 @@
 const AWS = require('aws-sdk'),
 	sns = new AWS.SNS(),
 	TOPIC_ARN = process.env.TOPIC_ARN,
-	lowercaseKeys = require('./lowercase-keys'),
-	uaParser = require('useragent'),
-	extractKeys = require('./extract-keys'),
-	convertors = {'/desole': require('./convert-from-desole'), '/sentry': require('./convert-from-sentry')};
-		
+	converters = {'/desole': require('./convert-from-desole'), '/sentry': require('./convert-from-sentry')},
+
 	htmlResponse = function (body, requestedCode) {
 		const code = requestedCode || (body ? 200 : 204);
 		return {
@@ -19,21 +16,21 @@ const AWS = require('aws-sdk'),
 				'Access-Control-Max-Age': '86400'
 			}
 		};
+	},
+	getConvertedEvent = (event, context) => {
+		try {
+			const converter = converters[event.path];
+			return converter(event, context);
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 exports.handler = (event, context) => {
 	if (event.httpMethod === 'OPTIONS') {
 		return Promise.resolve(htmlResponse());
 	}
-	let desoleEvent;
-	const converter = converters[event.path]
-	
-	try {
-		desoleEvent = converter(event, context);
-	} catch (e) {
-		console.error(e);
-	}
-	
+	const desoleEvent = getConvertedEvent(event, context);
 	if (!desoleEvent) {
 		return Promise.resolve(htmlResponse('invalid-args', 400));
 	}
