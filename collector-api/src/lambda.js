@@ -2,7 +2,7 @@
 const AWS = require('aws-sdk'),
 	sns = new AWS.SNS(),
 	TOPIC_ARN = process.env.TOPIC_ARN,
-	converters = {'/desole': require('./convert-from-desole'), '/sentry': require('./convert-from-sentry')},
+	converters = {'/desole': require('./convert-from-desole'), '/api/raven/store': require('./convert-from-sentry')},
 
 	htmlResponse = function (body, requestedCode) {
 		const code = requestedCode || (body ? 200 : 204);
@@ -19,7 +19,7 @@ const AWS = require('aws-sdk'),
 	},
 	getConvertedEvent = (event, context) => {
 		try {
-			const converter = converters[event.path];
+			const converter = converters[event.requestContext.resourcePath];
 			return converter(event, context);
 		} catch (e) {
 			console.error(e);

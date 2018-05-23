@@ -73,12 +73,12 @@ Resources:
         PostResourceSentry:
           Type: Api
           Properties:
-            Path: /sentry
+            Path: /api/raven/store
             Method: POST
         OptionsResourceSentry:
           Type: Api
           Properties:
-            Path: /sentry
+            Path: /api/raven/store
             Method: OPTIONS
   CollectorTopic: 
     Type: AWS::SNS::Topic
