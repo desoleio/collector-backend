@@ -5,41 +5,8 @@ const AWS = require('aws-sdk'),
 	lowercaseKeys = require('./lowercase-keys'),
 	uaParser = require('useragent'),
 	extractKeys = require('./extract-keys'),
-	extractDeviceType = function (headers) {
-		return ['SmartTV', 'Mobile', 'Tablet', 'Desktop'].find(type => headers[`cloudfront-is-${type.toLowerCase()}-viewer`] === 'true');
-	},
-	validateEvent = function (desoleEvent) {
-		return desoleEvent; // check fields etc
-	},
-	extract = function (lambdaProxyEvent, lambdaContext) {
-		try {
-			const body = JSON.parse(lambdaProxyEvent.body),
-				normalizedHeaders = lowercaseKeys(lambdaProxyEvent.headers),
-				userAgent = uaParser.parse(lambdaProxyEvent.requestContext.identity.userAgent),
-				desoleEvent = extractKeys(body, ['severity', 'stack', 'type', 'timestamp', 'resource', 'tags']);
-			desoleEvent.app = extractKeys(body.app, ['name', 'version', 'stage']);
-			desoleEvent.id = lambdaContext.awsRequestId;
-			desoleEvent.receivedAt = Date.now();
-			desoleEvent.referrer = normalizedHeaders.referer;
-			desoleEvent.endpoint = extractKeys(body.endpoint, ['id', 'platform', 'language']);
-			Object.assign(desoleEvent.endpoint, {
-				country: normalizedHeaders['cloudfront-viewer-country'],
-				userAgent: lambdaProxyEvent.requestContext.identity.userAgent,
-				deviceType: extractDeviceType(normalizedHeaders),
-				runtime: userAgent.family,
-				runtimeVersion: userAgent.toVersion(),
-				os: userAgent.os.family,
-				osVersion: userAgent.os.toVersion()
-			});
-
-
-
-			return validateEvent(desoleEvent);
-		} catch (e) {
-			console.log(e);
-			return false;
-		}
-	},
+	convertors = {'/desole': require('./convert-from-desole'), '/sentry': require('./convert-from-sentry')};
+		
 	htmlResponse = function (body, requestedCode) {
 		const code = requestedCode || (body ? 200 : 204);
 		return {
@@ -58,7 +25,15 @@ exports.handler = (event, context) => {
 	if (event.httpMethod === 'OPTIONS') {
 		return Promise.resolve(htmlResponse());
 	}
-	const desoleEvent = extract(event, context);
+	let desoleEvent;
+	const converter = converters[event.path]
+	
+	try {
+		desoleEvent = converter(event, context);
+	} catch (e) {
+		console.error(e);
+	}
+	
 	if (!desoleEvent) {
 		return Promise.resolve(htmlResponse('invalid-args', 400));
 	}

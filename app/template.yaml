@@ -70,6 +70,16 @@ Resources:
           Properties:
             Path: /desole
             Method: OPTIONS
+        PostResourceSentry:
+          Type: Api
+          Properties:
+            Path: /sentry
+            Method: POST
+        OptionsResourceSentry:
+          Type: Api
+          Properties:
+            Path: /sentry
+            Method: OPTIONS
   CollectorTopic: 
     Type: AWS::SNS::Topic
   S3Publisher:

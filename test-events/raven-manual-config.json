@@ -1,0 +1,80 @@
+{
+   "release" : "1.3.0",
+   "event_id" : "bbe521a9464e404384555e5254ff03a0",
+   "extra" : {
+      "session:duration" : 1084
+   },
+   "logger" : "javascript",
+   "request" : {
+      "url" : "http://localhost:4000/runtime-js-errors.html",
+      "headers" : {
+         "Referer" : "http://localhost:4000/",
+         "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36"
+      }
+   },
+   "stacktrace" : {
+      "frames" : [
+         {
+            "lineno" : 2,
+            "in_app" : false,
+            "function" : "HTMLButtonElement.d",
+            "colno" : 4706,
+            "filename" : "https://cdn.ravenjs.com/3.25.2/raven.min.js"
+         },
+         {
+            "filename" : "http://localhost:4000/scripts/runtime-errors.js",
+            "in_app" : true,
+            "colno" : 9,
+            "function" : "HTMLButtonElement.<anonymous>",
+            "lineno" : 37
+         },
+         {
+            "filename" : "https://cdn.ravenjs.com/3.25.2/raven.min.js",
+            "lineno" : 2,
+            "in_app" : false,
+            "colno" : 5793,
+            "function" : "f.captureException"
+         },
+         {
+            "in_app" : false,
+            "function" : "f.captureMessage",
+            "colno" : 6306,
+            "lineno" : 2,
+            "filename" : "https://cdn.ravenjs.com/3.25.2/raven.min.js"
+         }
+      ]
+   },
+   "tags" : {
+      "sajkaca" : "production",
+      "hello" : "what"
+   },
+   "environment" : "production",
+   "platform" : "javascript",
+   "project" : "desole",
+   "user" : {
+      "email" : "foo@example.com"
+   },
+   "message" : "error",
+   "fingerprint" : [
+      "error"
+   ],
+   "level" : "info",
+   "breadcrumbs" : {
+      "values" : [
+         {
+            "data" : {
+               "isbn" : "978-1617290541",
+               "cartSize" : "3"
+            },
+            "message" : "Item added to shopping cart",
+            "category" : "action",
+            "timestamp" : 1527096468.864
+         },
+         {
+            "category" : "ui.click",
+            "message" : "body > button#sentryException",
+            "timestamp" : 1527096469.937
+         }
+      ]
+   }
+}
