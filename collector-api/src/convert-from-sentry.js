@@ -12,12 +12,13 @@ module.exports = function convertFromSentry(lambdaProxyEvent, lambdaContext) {
 		exception = body.exception.values[0],
 		breadcrumbs = body.breadcrumbs,
 		desoleEvent = Object.assign(createGenericLambdaEvent(lambdaProxyEvent), {
-			'severity': body.level || 'error',
-			'stack': getRavenStacktraces(exception),
-			'type': exception.value,
-			'timestamp': extractBreadcrumbTimeStamp(breadcrumbs),
-			'resource': body.request.url,
-			'tags': body.tags
+			severity: body.level || 'error',
+			stack: getRavenStacktraces(exception),
+			type: exception.type,
+			message: exception.value,
+			timestamp: extractBreadcrumbTimeStamp(breadcrumbs),
+			resource: body.request.url,
+			tags: body.tags
 		});
 	desoleEvent.endpoint.id = body.user && body.user.id;
 	desoleEvent.endpoint.platform = body.platform;
