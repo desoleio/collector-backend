@@ -27,7 +27,7 @@ module.exports = function convertFromSentry(lambdaProxyEvent, lambdaContext) {
 		version: body.release,
 		stage: body.environment
 	};
-	desoleEvent.id = lambdaContext.event_id;
+	desoleEvent.id = body.event_id;
 	return desoleEvent;
 };
 
