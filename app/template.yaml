@@ -135,9 +135,12 @@ Resources:
               Status: Enabled
           - !Ref AWS::NoValue
 Outputs:
-  ApiUrl:
+  DesoleClientApiUrl:
     Description: The URL of your API endpoint -- use this to configure the Desole client
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ServerlessRestApiProdStage}/desole"
+  RavenClientApiUrl:
+    Description: The URL of your API endpoint -- use this to configure the Raven client
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ServerlessRestApiProdStage}/raven"
   S3Bucket:
     Value: !Ref CollectedEventsStorage
     Description: S3 bucket where the events will be archived
