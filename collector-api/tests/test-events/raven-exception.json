@@ -1,0 +1,111 @@
+{
+    "project": "raven",
+    "logger": "javascript",
+    "platform": "javascript",
+    "request": {
+        "headers": {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+            "Referer": "http://localhost:4000/"
+        },
+        "url": "http://localhost:4000/runtime-js-errors.html"
+    },
+    "exception": {
+        "values": [
+            {
+                "type": "TypeError",
+                "value": "Cannot read property 'captureException' of undefined",
+                "stacktrace": {
+                    "frames": [
+                        {
+                            "filename": "http://localhost:4000/scripts/runtime-errors.js",
+                            "lineno": 33,
+                            "colno": 18,
+                            "function": "Promise.resolve.then.catch",
+                            "in_app": true
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "transaction": "http://localhost:4000/scripts/runtime-errors.js",
+    "trimHeadFrames": 0,
+    "extra": {
+        "unhandledPromiseRejection": true,
+        "session:duration": 66737
+    },
+    "tags": {
+        "hello": "what",
+        "sajkaca": "production"
+    },
+    "breadcrumbs": {
+        "values": [
+            {
+                "timestamp": 1527327248.232,
+                "message": "Item added to shopping cart",
+                "category": "action",
+                "data": {
+                    "isbn": "978-1617290541",
+                    "cartSize": "3"
+                }
+            },
+            {
+                "timestamp": 1527327249.255,
+                "category": "ui.click",
+                "message": "body > button#sentryException"
+            },
+            {
+                "timestamp": 1527327249.258,
+                "category": "sentry",
+                "message": "error",
+                "event_id": "135ed56f23394505929fabbd53190277",
+                "level": "info"
+            },
+            {
+                "timestamp": 1527327250.501,
+                "category": "ui.click",
+                "message": "body"
+            },
+            {
+                "timestamp": 1527327307.239,
+                "category": "ui.click",
+                "message": "body > button#uncaughtString"
+            },
+            {
+                "timestamp": 1527327307.241,
+                "category": "sentry",
+                "message": "uncaughtString",
+                "event_id": "653c19cb791f42e4a5d76c97b2b79fc7",
+                "level": "error"
+            },
+            {
+                "timestamp": 1527327309.632,
+                "category": "ui.click",
+                "message": "body > button#uncaughtPromise"
+            },
+            {
+                "timestamp": 1527327312.382,
+                "category": "ui.click",
+                "message": "body > button#uncaughtStrictError"
+            },
+            {
+                "timestamp": 1527327312.382,
+                "category": "sentry",
+                "message": "TypeError: Assignment to constant variable.",
+                "event_id": "3b4f04eaff9f4a5791d18fe41a63df31",
+                "level": "error"
+            },
+            {
+                "timestamp": 1527327314.962,
+                "category": "ui.click",
+                "message": "body > button#capturedPromise"
+            }
+        ]
+    },
+    "user": {
+        "email": "foo@example.com"
+    },
+    "environment": "production",
+    "release": "1.3.0",
+    "event_id": "5786ffe689cc4f56b10d6b6cec6d98d9"
+}

@@ -14,5 +14,14 @@
   },
   "optionalDependencies": {
     "aws-sdk": "^2.224.1"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/tests/"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

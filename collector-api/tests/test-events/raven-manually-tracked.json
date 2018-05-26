@@ -1,0 +1,80 @@
+{
+    "project": "raven",
+    "logger": "javascript",
+    "platform": "javascript",
+    "request": {
+      "headers": {
+        "User-Agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/66.0.3359.181 Safari\/537.36",
+        "Referer": "http:\/\/localhost:4000\/"
+      },
+      "url": "http:\/\/localhost:4000\/runtime-js-errors.html"
+    },
+    "message": "error",
+    "level": "info",
+    "stacktrace": {
+      "frames": [
+        {
+          "filename": "https:\/\/cdn.ravenjs.com\/3.25.2\/raven.min.js",
+          "lineno": 2,
+          "colno": 4706,
+          "function": "HTMLButtonElement.d",
+          "in_app": false
+        },
+        {
+          "filename": "http:\/\/localhost:4000\/scripts\/runtime-errors.js",
+          "lineno": 37,
+          "colno": 9,
+          "function": "HTMLButtonElement.<anonymous>",
+          "in_app": true
+        },
+        {
+          "filename": "https:\/\/cdn.ravenjs.com\/3.25.2\/raven.min.js",
+          "lineno": 2,
+          "colno": 5793,
+          "function": "f.captureException",
+          "in_app": false
+        },
+        {
+          "filename": "https:\/\/cdn.ravenjs.com\/3.25.2\/raven.min.js",
+          "lineno": 2,
+          "colno": 6306,
+          "function": "f.captureMessage",
+          "in_app": false
+        }
+      ]
+    },
+    "fingerprint": [
+      "error"
+    ],
+    "tags": {
+      "hello": "what",
+      "sajkaca": "production"
+    },
+    "extra": {
+      "session:duration": 1030
+    },
+    "breadcrumbs": {
+      "values": [
+        {
+          "timestamp": 1527327248.232,
+          "message": "Item added to shopping cart",
+          "category": "action",
+          "data": {
+            "isbn": "978-1617290541",
+            "cartSize": "3"
+          }
+        },
+        {
+          "timestamp": 1527327249.255,
+          "category": "ui.click",
+          "message": "body > button#sentryException"
+        }
+      ]
+    },
+    "user": {
+      "email": "foo@example.com"
+    },
+    "environment": "production",
+    "release": "1.3.0",
+    "event_id": "135ed56f23394505929fabbd53190277"
+  }

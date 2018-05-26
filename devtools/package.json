@@ -7,6 +7,7 @@
   "dependencies": {
     "eslint": "^4.19.1",
     "eslint-config-crockford": "^2.0.0",
-    "eslint-config-defaults": "^9.0.0"
+    "eslint-config-defaults": "^9.0.0",
+    "jest": "^23.0.0"
   }
 }
