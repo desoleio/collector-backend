@@ -1,6 +1,12 @@
 {
   "name": "@desole/devtools",
   "version": "1.0.0",
+  "scripts": {
+    "devtool": "./bin/devtool.js"
+  },
+  "bin": {
+    "devtool": "./bin/devtool.js"
+  },
   "description": "Common development tooling setup for desole projects",
   "private": true,
   "license": "MIT",
