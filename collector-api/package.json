@@ -24,7 +24,7 @@
     ]
   },
   "scripts": {
-    "pretest": "eslint src tests",
-    "test": "jest"
+    "pretest": "devtool eslint src tests",
+    "test": "devtool jest --color"
   }
 }
