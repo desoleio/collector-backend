@@ -1,5 +1,4 @@
-/* global test, describe, test, expect */
-
+'use strict';
 const convertFromSentry = require('../src/convert-from-sentry'),
 	lambdaProxyEvent = require('./test-events/lambda-proxy-event'),
 	wrapEvent = (event) => {
@@ -9,7 +8,7 @@ const convertFromSentry = require('../src/convert-from-sentry'),
 	};
 
 describe('Convert from Sentry', () => {
-	'use strict';
+
 
 	describe('Error type', () => {
 		test('should pickup the error type if defined', () => {

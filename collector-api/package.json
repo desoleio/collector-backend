@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/lambda.js",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "private": true,
   "license": "MIT",
   "devDependencies": {
@@ -22,6 +24,7 @@
     ]
   },
   "scripts": {
+    "pretest": "eslint src tests",
     "test": "jest"
   }
 }
