@@ -5,7 +5,6 @@
   "description": "Shell package for cloudformation deployment, not intended to be used directly",
   "main": "lambda.js",
   "scripts": {
-    "update-timestamps": "find ./node_modules/ -exec touch '{}' \\;",
     "prepackage": "claudia pack --no-optional-dependencies --output desole.zip --force && sam validate",
     "package": "echo packaging $npm_package_config_region to $npm_package_config_bucket_name && aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --region $npm_package_config_region",
