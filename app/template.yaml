@@ -50,6 +50,7 @@ Resources:
   CollectorApi:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: lambda.zip
       Handler: collector-api.handler
       Runtime: nodejs8.10
       Environment:
@@ -85,6 +86,7 @@ Resources:
   S3Publisher:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: lambda.zip
       Handler: s3-publisher.handler
       Runtime: nodejs8.10
       Environment:
@@ -102,6 +104,7 @@ Resources:
   CloudwatchPublisher:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: lambda.zip
       Handler: cloudwatch-publisher.handler
       Runtime: nodejs8.10
       Environment:

@@ -29,5 +29,8 @@
     "deployment_regions": "us-east-1 eu-central-1 us-west-1 ap-southeast-2",
     "cloudformation_stack": "desoleStack",
     "region": "us-east-1"
+  },
+  "devDependencies": {
+    "claudia": "^5.0.0"
   }
 }
