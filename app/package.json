@@ -6,7 +6,7 @@
   "main": "lambda.js",
   "scripts": {
     "update-timestamps": "find ./node_modules/ -exec touch '{}' \\;",
-    "prepackage": "npm run update-timestamps && sam validate",
+    "prepackage": "claudia pack --no-optional-dependencies --output desole.zip --force && sam validate",
     "package": "echo packaging $npm_package_config_region to $npm_package_config_bucket_name && aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --region $npm_package_config_region",
     "qd": "npm run package && npm run deploy && npm run get-deploy-outputs",
@@ -29,5 +29,8 @@
     "deployment_regions": "us-east-1 eu-central-1 us-west-1 ap-southeast-2",
     "cloudformation_stack": "desoleStack",
     "region": "us-east-1"
+  },
+  "devDependencies": {
+    "claudia": "^5.0.0"
   }
 }
