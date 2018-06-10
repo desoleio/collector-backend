@@ -31,13 +31,17 @@ Change the `template.yaml` to modify the ElasticSearch instance size, volume and
 
 1. Install the dependencies
   ```bash
-  npm install --production --no-optional
+  npm install
   ```
-2. Package the template 
+2. Prepare and pack your code
+  ```bash
+  npm run prepackage
+  ```
+3. Package the template 
   ```bash
   aws cloudformation package --template-file template.yaml --output-template-file output.yaml
   ```
-3. Deploy the packaged template
+4. Deploy the packaged template
   ```bash
   aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> --parameter-overrides CollectorSNSTopic=<SNS TOPIC ARN>
   ```

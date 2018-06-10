@@ -34,13 +34,17 @@ To link existing Pinpoint users to Desole events, just make sure to supply the c
 
 1. Install the dependencies
   ```bash
-  npm install --production --no-optional
+  npm install
   ```
-2. Package the template 
+2. Prepare and pack your code
+  ```bash
+  npm run prepackage
+  ```
+3. Package the template 
   ```bash
   aws cloudformation package --template-file template.yaml --output-template-file output.yaml
   ```
-3. Deploy the packaged template
+4. Deploy the packaged template
   ```bash
   aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> --parameter-overrides PinpointApplicationId=<APP ID> CollectorSNSTopic=<SNS TOPIC ARN>
   ```
