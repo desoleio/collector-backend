@@ -26,7 +26,7 @@ To link existing Pinpoint users to Desole events, just make sure to supply the c
 
 ### Prerequisites
 
-* NPM 3 (the packaging system currently does not work with NPM5)
+* NPM
 * An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
 * AWS CLI (command line tools), configured to use your account
 

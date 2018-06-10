@@ -6,7 +6,7 @@ To deploy using a ready-made template, check out the parent directory [README.md
 
 ## Prerequisites
 
-* NPM 3 (the packaging system currently does not work with NPM5)
+* NPM
 * An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
 * AWS CLI (command line tools), configured to use your account
 
@@ -16,13 +16,17 @@ For a detailed list of supported parameters, check out [`template.yaml`](templat
 
 1. Install the dependencies
   ```bash
-  npm install --production --no-optional
+  npm install
   ```
-2. Package the template 
+2. Prepare and pack your code
+  ```bash
+  npm run prepackage
+  ```
+3. Package the template
   ```bash
   aws cloudformation package --template-file template.yaml --output-template-file output.yaml
   ```
-3. Deploy the packaged template
+4. Deploy the packaged template
   ```bash
   aws cloudformation deploy --template-file output.yaml --capabilities CAPABILITY_IAM --stack-name <STACK NAME> 
   ```

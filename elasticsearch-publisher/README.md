@@ -21,7 +21,7 @@ The default template deploys a new AWS ElasticSearch domain on a t2.micro instan
 
 ## Prerequisites
 
-* NPM 3 (the packaging system currently does not work with NPM5)
+* NPM
 * An S3 Bucket for Deployment, in the same region where you would like to deploy Desole
 * AWS CLI (command line tools), configured to use your account
 
