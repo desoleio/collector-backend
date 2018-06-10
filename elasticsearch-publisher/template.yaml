@@ -40,7 +40,7 @@ Resources:
   EsPublisher:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/lambda.handler
+      Handler: desole-elasticsearch.zip
       Runtime: nodejs8.10
       Environment:
         Variables:

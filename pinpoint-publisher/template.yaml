@@ -25,7 +25,7 @@ Resources:
   PinpointPublisher:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/lambda.handler
+      Handler: desole-pinpoint.zip
       Runtime: nodejs8.10
       Environment:
         Variables:
