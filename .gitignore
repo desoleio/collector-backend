@@ -5,3 +5,5 @@ output.yaml
 .idea
 .DS_Store
 app/desole.zip
+elasticsearch-publisher/es-publisher.zip
+pinpoint-publisher/pinpoint-publisher.zip

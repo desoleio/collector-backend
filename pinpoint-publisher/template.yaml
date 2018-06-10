@@ -25,6 +25,7 @@ Resources:
   PinpointPublisher:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: pinpoint-publisher.zip
       Handler: src/lambda.handler
       Runtime: nodejs8.10
       Environment:
