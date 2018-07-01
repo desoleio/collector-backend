@@ -1,6 +1,6 @@
 {
   "name": "@desole/pinpoint-publisher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desole publisher saves AWS Pinpoint/Mobile analytics metrics",
   "main": "src/lambda.js",
   "keywords": [],
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "prepackage": "claudia pack --no-optional-dependencies --output pinpoint-publisher.zip --force",
-    "test": "sam validate",
+    "pretest": "devtool eslint src tests",
+    "test": "devtool jest --color",
     "package": "echo packaging $npm_package_config_region to $npm_package_config_bucket_name && aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket $npm_package_config_bucket_name --region $npm_package_config_region --s3-prefix $npm_package_version",
     "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name $npm_package_config_cloudformation_stack --capabilities CAPABILITY_IAM --region $npm_package_config_region --parameter-overrides PinpointApplicationId=$npm_package_config_pinpoint_id",
     "upload": "aws s3 cp output.yaml s3://$npm_package_config_bucket_name/$npm_package_version/$npm_package_name.yaml --acl public-read",
@@ -30,6 +31,12 @@
   },
   "optionalDependencies": {
     "aws-sdk": "^2.224.1"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/tests/"
+    ]
   },
   "config": {
     "bucket_name": "desole-packaging-us-east-1",

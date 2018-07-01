@@ -1,0 +1,27 @@
+{
+  "severity": "error",
+  "stack": "com.gargoylesoftware.htmlunit.ScriptException: TypeError: Cannot find default value for object. (https://dashboard.vacationtracker.io:443/polyfills.569c7d225d020fab25d6.bundle.js#1)",
+  "timestamp": 1530403229851,
+  "resource": "",
+  "tags": {},
+  "app": {
+    "name": "STG Dashboard",
+    "version": "1.0.0",
+    "stage": "prod"
+  },
+  "id": "6a9ff062-7cc8-11e8-ba99-d99efe337df0",
+  "receivedAt": 1530406085926,
+  "referrer": "",
+  "endpoint": {
+    "id": "1ea0ce11-cf8b-4015-9124-d37709175e9a",
+    "platform": "MacIntel",
+    "language": "en-US",
+    "country": "US",
+    "userAgent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36",
+    "deviceType": "Desktop",
+    "runtime": "Chrome",
+    "runtimeVersion": "56.0.2924",
+    "os": "Windows",
+    "osVersion": "7.0.0"
+  }
+}
